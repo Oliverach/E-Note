@@ -9,3 +9,7 @@ Diese Website hat ein minimalistisches Design, welches die jüngere Altersgruppe
 
 ## Klassendiagramm:
 ![e-note ERM](README_Images/ERM.png?raw=true)
+
+## Author
+
+Oliver Achermann
