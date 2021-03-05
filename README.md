@@ -12,7 +12,7 @@ Diese Website hat ein minimalistisches Design, welches die jüngere Altersgruppe
 schriftart: Roboto (https://fonts.google.com/specimen/Roboto?preview.text_type=custom)<br />
 Mit Diesen Farben und Schriftart soll ein minimalistischer Eindruck hinterlassen.
 
-## Klassendiagramm:
+## ERM:
 ![e-note color_palette](README_Images/ERM.png?raw=true)
 
 ## Author
