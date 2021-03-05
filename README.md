@@ -12,6 +12,33 @@ Diese Website hat ein minimalistisches Design, welches die jüngere Altersgruppe
 schriftart: Roboto (https://fonts.google.com/specimen/Roboto?preview.text_type=custom)<br />
 Mit Diesen Farben und Schriftart soll ein minimalistischer Eindruck hinterlassen.
 
+## GUI
+
+### Log-in
+![e-note login_Screen](README_Images/login.png?raw=true)
+
+### Sign-up
+![e-note signup_Screen](README_Images/signup.png?raw=true)
+
+### Example-Site
+![e-note example_site](README_Images/example_site.png?raw=true)
+
+### Specific Category
+![e-note specific_category](README_Images/specific category.png?raw=true)
+
+### Add Category
+![e-note add_catefory](README_Images/add category.png?raw=true)
+
+### New User Default Look
+![e-note empty](README_Images/empty.png?raw=true)
+
+### Profile
+![e-note profile](README_Images/profile.png?raw=true)
+
+
+
+
+
 ## ERM:
 ![e-note color_palette](README_Images/ERM.png?raw=true)
 
