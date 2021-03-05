@@ -9,11 +9,11 @@ Diese Website hat ein minimalistisches Design, welches die jüngere Altersgruppe
 
 ## Farbkonzept
 ![e-note ERM](README_Images/color_theme.png?raw=true)
-schriftart: Roboto (https://fonts.google.com/specimen/Roboto?preview.text_type=custom)
+schriftart: Roboto (https://fonts.google.com/specimen/Roboto?preview.text_type=custom)<br />
 Mit Diesen Farben und Schriftart soll ein minimalistischer Eindruck hinterlassen.
 
 ## Klassendiagramm:
-![e-note ERM](README_Images/ERM.png?raw=true)
+![e-note color_palette](README_Images/ERM.png?raw=true)
 
 ## Author
 
