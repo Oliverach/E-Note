@@ -6,4 +6,4 @@ Diese Website soll als persönliches Todo-List dienen. Nachdem man sich registri
 Diese Website hat ein minimalistisches Design, welches die jüngere Altersgruppe besonders anziehen wird. Momentan bietet diese Website nur englischen Layout und ist somit für die englische Sprachgruppe geeignet. Es ist einfach zu benutzen, Region unabhängig und braucht nicht spezielle Kompetenz im Umgang mit Website.
 
 ## Klassendiagramm:
-![e-note ERM](README%20Images/ERM.png?raw=true)
+![e-note ERM](README_Images/ERM.png?raw=true)
