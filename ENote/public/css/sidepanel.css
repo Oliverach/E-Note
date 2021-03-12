@@ -1,0 +1,14 @@
+.sidepanel{
+    background-color: #041955;
+    position: absolute;
+    left: 0;
+    top: 48px;
+    width: 15%;
+    height: 1080px;
+    min-width: 200px;
+}
+a{
+    display:block;
+    color: white;
+    margin: 0
+}

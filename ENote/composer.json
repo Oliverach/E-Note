@@ -1,0 +1,19 @@
+{
+  "name": "zacheo/mvc",
+  "authors": [
+    {
+      "name": "Oliverach",
+      "email": "70696127+Oliverach@users.noreply.github.com"
+    }
+  ],
+  "type": "project",
+  "minimum-stability": "dev",
+  "require": {
+    "ext-mysqli": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\":"src/"
+    }
+  }
+}
