@@ -10,14 +10,14 @@ class UserRepository extends Repository
 {
     protected $tableName = "user";
 
-    public function createUser($username, $password, $confirm_password, $email)
+    public function createUser($username, $password, $confirm_password)
     {
-        $query = "INSERT INTO user(username, password, email) VALUES (?,?,?)";
+        $query = "INSERT INTO user(username, password) VALUES (?,?)";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('sss', $username, $password, $email);
+        $rc = $statement->bind_param('ss', $username, $password);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
@@ -66,11 +66,9 @@ class UserRepository extends Repository
         if (!$result) {
             throw new Exception($statement->error);
         }
-        $doesUserExist = true;
-        if ($result->num_rows == 0){
-            $doesUserExist = false;
+        if ($result->num_rows > 0){
+            $row = $result->fetch_object();
+            return $row->id;
         }
-        return $doesUserExist;
     }
-
 }

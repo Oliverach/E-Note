@@ -3,8 +3,10 @@
 </head>
 <body>
     <div class="sidepanel">
-        <a href="">New Category</a>
+        <a href="/category/create">New Category</a>
         <a href="">All Category</a>
+
     </div>
+
 </body>
 

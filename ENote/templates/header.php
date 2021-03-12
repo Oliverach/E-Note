@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,16 +9,14 @@
   </head>
   <body>
     <header>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+      <nav class="navbar navbar-expand-md  fixed-top">
         <a class="nav mx-auto navbar-brand" href="/">E-NOTE</a>
           <?php if (!(isset($_SESSION['loggedIn']))){
           echo'<a href="/user/login"><input type="button" value="Log In" class="btn btn-primary" ></a>';
-          } else{
+          } else {
               echo '<a href="/user/logoutUser"><input type="button" value="Log out" class="btn btn-primary" ></a>';
               }
           ?>
       </nav>
     </header>
 
-    <main class="container">
-      <h1><?= $heading; ?></h1>

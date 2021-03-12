@@ -1,0 +1,30 @@
+body{
+    margin-left: 15%;
+}
+.wrapper{
+    display: grid;
+    grid-template-rows: 3fr 1fr;
+}
+.input{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+.wrapper3r{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+
+}
+.wrapper4r{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+.wrapper4r, .wrapper3r, .wrapper{
+    margin: auto;
+    min-width: 561px;
+    min-height: 636px;
+    width: 35%;
+    height: 80%;
+    background-color: #041955;
+    border-radius: 20px;
+    box-shadow: 0px 5px 5px rgba(0,0,0,0.25);
+}
