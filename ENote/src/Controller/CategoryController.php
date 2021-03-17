@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Database\ConnectionHandler;
+use App\Helper\SessionHelper;
 use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
 use App\View\View;
@@ -21,11 +22,7 @@ class CategoryController
         $color = ConnectionHandler::getConnection()->escape_string($_POST['color']);
         $categoryRepository = new CategoryRepository();
         $categoryRepository->addCategory($name,$userID,$color);
+        SessionHelper::updateUserCategory();
         header("Location: /user ");
     }
-    public function getAllCategory(){
-        $categoryRepository = new CategoryRepository();
-        $categoryRepository->getCategory();
-    }
-
 }

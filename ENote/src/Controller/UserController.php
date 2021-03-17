@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Database\ConnectionHandler;
+use App\Helper\SessionHelper;
+use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
 use App\View\View;
 
@@ -52,23 +54,27 @@ class UserController
         $username = ConnectionHandler::getConnection()->escape_string($_POST['username']);
         $password = sha1($_POST['password']);
         $userRepository = new UserRepository();
-        $userId = $userRepository->loginUser($username, $password);
+        $user = $userRepository->loginUser($username, $password);
 
-        if ($userId > 0) {
+        if ($user->id > 0) {
             $_SESSION['loggedIn'] = true;
-            $_SESSION['userID'] = $userId;
+            $_SESSION['userID'] = $user->id;
+            SessionHelper::updateUserCategory();
             header('Location: /');
             exit();
         } else {
-            echo '<script>alert("incorrect")</script>';
+            echo '<p>login failed</p>';
             header('Location: /user/login');
+
             exit();
+
         }
     }
 
     public function logoutUser()
     {
         session_destroy();
+        session_unset();
         header('Location: /user/login');
         exit();
     }
