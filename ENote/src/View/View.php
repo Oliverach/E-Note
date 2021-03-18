@@ -83,7 +83,9 @@ class View
     public function display(){
         extract($this->properties);
         require './../templates/header.php';
-        require './../templates/sidepanel.php';
+        if(isset($_SESSION['loggedIn'])){
+            require './../templates/sidepanel.php';
+        }
         require $this->viewfile;
     }
 }

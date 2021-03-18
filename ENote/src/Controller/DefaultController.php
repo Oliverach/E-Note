@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Helper\SessionHelper;
 use App\View\View;
 
 /**
@@ -40,8 +41,13 @@ class DefaultController
         // In diesem Fall möchten wir dem Benutzer die View mit dem Namen
         //   "default_index" rendern. Wie das genau funktioniert, ist in der
         //   View Klasse beschrieben.
-        $view = new View('default/index');
-        $view->title = 'Startseite';
+        if(isset($_SESSION['loggedIn'])){
+            $view = new View('default/index');
+        }else{
+            SessionHelper::setDefaultSession();
+            $view = new View('user/login');
+        }
+        $view->title = 'Login';
         $view->heading = 'Homepage';
         $view->display();
     }

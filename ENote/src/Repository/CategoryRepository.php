@@ -26,7 +26,7 @@ class CategoryRepository extends Repository
     }
 
     public function getCategoriesByUserID($userID){
-        $query = "SELECT name, color, id FROM category where user_id =?";
+        $query = "SELECT name, color, id FROM $this->tableName where user_id =?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);

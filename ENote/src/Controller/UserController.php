@@ -10,17 +10,9 @@ use App\View\View;
 
 class UserController
 {
-
-    public function index()
-    {
-        $view = new View('user/index');
-        $view->title = 'Benutzer';
-        $view->display();
-    }
-
     public function create()
     {
-        $view = new View('user/create');
+        $view = new View('user/signin');
         $view->title = 'Sign In';
         $view->display();
     }
@@ -30,11 +22,8 @@ class UserController
         $username = ConnectionHandler::getConnection()->escape_string($_POST['username']);
         $password = sha1($_POST['password']);
         $confirm_password = sha1($_POST['confirm_password']);
-
         $userRepository = new UserRepository();
         $userRepository->createUser($username, $password, $confirm_password);
-
-        header('Location: /user/login');
     }
 
     public function login()
@@ -52,6 +41,7 @@ class UserController
     public function doLogin()
     {
         $username = ConnectionHandler::getConnection()->escape_string($_POST['username']);
+        //password_hash("21334", PASSWORD_ARGON2I);
         $password = sha1($_POST['password']);
         $userRepository = new UserRepository();
         $user = $userRepository->loginUser($username, $password);
@@ -63,7 +53,7 @@ class UserController
             header('Location: /');
             exit();
         } else {
-            echo '<p>login failed</p>';
+            $_SESSION['LoginFailed'] = true;
             header('Location: /user/login');
             exit();
         }

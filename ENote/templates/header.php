@@ -10,11 +10,11 @@
   <body>
     <header>
       <nav class="navbar navbar-expand-md  fixed-top">
-        <a class="nav mx-auto navbar-brand" href="/">E-NOTE</a>
+        <a class="nav mx-auto"  href="/">E-NOTE</a>
           <?php if (!(isset($_SESSION['loggedIn']))){
-          echo'<a href="/user/login"><input type="button" value="Log In" class="btn btn-primary" ></a>';
+          echo'<a href="/user/login" class="userBtnA"><input type="button" value="Log In" class="userBtn" ></a>';
           } else {
-              echo '<a href="/user/logoutUser"><input type="button" value="Log out" class="btn btn-primary" ></a>';
+              echo '<a href="/user/logoutUser" class="userBtnA"><input type="button" value="Log out" class="userBtn" ></a>';
               }
           ?>
       </nav>

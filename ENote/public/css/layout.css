@@ -1,22 +1,26 @@
 body{
-    margin-left: 15%;
+    margin-top: 56px;
+    height: 100%;
 }
 .wrapper{
     display: grid;
-    grid-template-rows: 3fr 1fr;
+    grid-template-rows: 1fr;
 }
 .input{
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 0.4fr;
+}
+.wrapper{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
 }
 .wrapper3r{
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
-
 }
 .wrapper4r{
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 0.4fr;
 }
 .wrapper4r, .wrapper3r, .wrapper{
     margin: auto;
@@ -27,4 +31,9 @@ body{
     background-color: #041955;
     border-radius: 20px;
     box-shadow: 0px 5px 5px rgba(0,0,0,0.25);
+}
+.specificCategory{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-left: 300px;
 }

@@ -3,21 +3,19 @@ namespace App\Controller;
 
 use App\Database\ConnectionHandler;
 use App\Repository\TaskRepository;
-use App\Repository\UserRepository;
 use App\View\View;
 class TaskController
 {
-
-    public function index()
-    {
-        $view = new View('task/index');
-        $view->title = 'Task';
-        $view->display();
-    }
-
     public function create()
     {
-        $_SESSION['currentCategoryID'] = (int)$_POST['id'];
+        if(!isset($_GET['id']) || !is_numeric($_GET['id'])){
+            header("Location: /");
+            exit();
+        }
+        $taskRepository = new TaskRepository();
+        $_SESSION['currentCategoryID'] = (int)$_GET['id'];
+        $_SESSION['taskOfCurrentCategory'] = $taskRepository->getTaskOfCurrentCategory($_SESSION['currentCategoryID']);
+        $_SESSION['completedTaskOfCurrentCategory'] = $taskRepository->getCompletedTaskOfCurrentCategory($_SESSION['currentCategoryID']);
         $view = new View('task/task');
         $view->title = 'Task';
         $view->display();
@@ -29,7 +27,15 @@ class TaskController
         $taskRepository = new TaskRepository();
         $categoryID = $_SESSION['currentCategoryID'];
         $taskRepository->addTask($description,$date,$categoryID);
-        header('Location: /task/index');
+        header('Location: /task/create?id='.$categoryID);
+        exit();
+    }
+    public function complete(){
+        $taskID = (int)$_GET['id'];
+        $taskRepository = new TaskRepository();
+        $taskRepository->completeTask($taskID);
+        $categoryID = $_SESSION['currentCategoryID'];
+        header('Location: /task/create?id='.$categoryID);
         exit();
     }
 

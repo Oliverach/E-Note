@@ -2,10 +2,13 @@ body {
   background-color: #3450A1;
   margin-top: 56px;
 }
-
-input[type=text],[type=password],[type=color],[type=submit]{
+.userBtnA,.userBtnA:hover{
+  font-size: 125%;
+}
+input[type=text],[type=password],[type=color],[type=button],[type= submit]{
   display: block;
   color:#97B4FF;
+  font-size: 100%;
   width: 60%;
   height:45%;
   text-align: center;
@@ -15,22 +18,50 @@ input[type=text],[type=password],[type=color],[type=submit]{
   box-shadow: 0px 5px 5px rgba(0,0,0,0.25);
   margin: auto;
 }
-input[type=text],[type=password],[type=color]{
+input[type=text],[type=password],[type=date]{
   width: 60%;
   height:45%;
+  font-size: 30px;
+  margin: auto;
 }
-input[type=submit]{
+input[type=submit],[type=button]{
   width: 20%;
   height:45%;
+  margin: auto;
 }
+input[type=date]{
 
+}
 h1{
   color: #97B4FF;
   text-align: center
 }
 nav{
   background-color:  #041955;
+  max-height:48px;
+
 }
-
-
+.nav,.nav:hover{
+  color:#97B4FF;
+  font-size: 30px;
+  text-decoration: none;
+}
+.userBtn{
+  position: absolute;
+  right: 20px;
+  top:5px;
+  width:100px;
+  height: 75%;
+  color:#97B4FF;
+  text-align: center;
+  background-color: #3450A1;
+  border: none;
+  border-radius:5px;
+  box-shadow: 0px 5px 5px rgba(0,0,0,0.25);
+}
+.alert{
+  color: red;
+  font-size: 150%;
+  text-align: center;
+}
 
