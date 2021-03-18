@@ -21,11 +21,11 @@ USE `mydb` ;
 DROP TABLE IF EXISTS `mydb`.`user` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`user` (
-  `ID` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `e-mail` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`ID`))
+  `e-mail` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -35,12 +35,12 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`category` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`category` (
-  `ID` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `user_ID` INT NOT NULL,
+  `user_id` INT NOT NULL,
   `color` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`ID`),
-  INDEX `fk_category_user_idx` (`user_ID` ASC) VISIBLE)
+  PRIMARY KEY (`id`),
+  INDEX `fk_category_user_idx` (`user_id` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -50,13 +50,13 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`task` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`task` (
-  `ID` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(45) NOT NULL,
   `dueDate` DATE NOT NULL,
-  `completed` TINYINT NOT NULL,
-  `category_ID` INT NOT NULL,
-  PRIMARY KEY (`ID`),
-  INDEX `fk_task_category1_idx` (`category_ID` ASC) VISIBLE)
+  `status` TINYINT NOT NULL,
+  `category_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_task_category1_idx` (`category_id` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 

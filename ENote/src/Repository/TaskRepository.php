@@ -12,25 +12,15 @@ class TaskRepository extends Repository
 
     public function addTask($description, $date, $categoryID)
     {
-        $query = "INSERT INTO task(description, dueDate, completed, category_id)VALUES (?,?,?,?)";
+        $defaultStatus = 0;
+        $query = "INSERT INTO task(description, dueDate, status, category_id, user_id)VALUES (?,?,?,?,?)";
         $connection = ConnectionHandler::getConnection();
         $statement = $connection->prepare($query);
         if ($statement == false) {
             throw new Exception($connection->error);
         }
-        $statement->bind_param('ssii', $description, $date,0,$categoryID);
-
+        $statement->bind_param('ssiii', $description, $date,$defaultStatus,$categoryID,$_SESSION['userID']);
         // Das Statement absetzen
         $statement->execute();
-
-        // Resultat der Abfrage holen
-        $result = $statement->get_result();
-        if (!$result) {
-            throw new Exception($statement->error);
-        }
-        if ($result->num_rows > 0){
-            $row = $result->fetch_object();
-            return $row;
-        }
     }
 }

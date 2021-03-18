@@ -65,9 +65,7 @@ class UserController
         } else {
             echo '<p>login failed</p>';
             header('Location: /user/login');
-
             exit();
-
         }
     }
 
