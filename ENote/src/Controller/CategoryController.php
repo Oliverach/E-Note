@@ -16,6 +16,13 @@ class CategoryController
         $view->title = 'Add Category';
         $view->display();
     }
+    public function  showAll()
+    {
+        SessionHelper::updateUserCategory();
+        $view = new View('category/allCategory');
+        $view->title = 'All Category';
+        $view->display();
+    }
     public function doCreate(){
         $name = ConnectionHandler::getConnection()->escape_string($_POST['name']);
         $userID = $_SESSION["userID"];
@@ -23,6 +30,6 @@ class CategoryController
         $categoryRepository = new CategoryRepository();
         $categoryRepository->addCategory($name,$userID,$color);
         SessionHelper::updateUserCategory();
-        header("Location: /user ");
+        header("Location: /category/showAll ");
     }
 }

@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Database\ConnectionHandler;
+use App\Helper\SessionHelper;
 use App\Repository\TaskRepository;
 use App\View\View;
 class TaskController
@@ -14,6 +15,7 @@ class TaskController
         }
         $taskRepository = new TaskRepository();
         $_SESSION['currentCategoryID'] = (int)$_GET['id'];
+        $_SESSION['currentCategoryName'] = $_GET['name'];
         $_SESSION['taskOfCurrentCategory'] = $taskRepository->getTaskOfCurrentCategory($_SESSION['currentCategoryID']);
         $_SESSION['completedTaskOfCurrentCategory'] = $taskRepository->getCompletedTaskOfCurrentCategory($_SESSION['currentCategoryID']);
         $view = new View('task/task');
@@ -25,17 +27,16 @@ class TaskController
         $description = ConnectionHandler::getConnection()->escape_string($_POST['description']);
         $date = $_POST['date'];
         $taskRepository = new TaskRepository();
-        $categoryID = $_SESSION['currentCategoryID'];
-        $taskRepository->addTask($description,$date,$categoryID);
-        header('Location: /task/create?id='.$categoryID);
+        $taskRepository->addTask($description,$date,$_SESSION['currentCategoryID']);
+        SessionHelper::updateUserCategory();
+        header('Location: /task/create?id='.$_SESSION['currentCategoryID'].'&name='.$_SESSION['currentCategoryName'].'');
         exit();
     }
     public function complete(){
         $taskID = (int)$_GET['id'];
         $taskRepository = new TaskRepository();
         $taskRepository->completeTask($taskID);
-        $categoryID = $_SESSION['currentCategoryID'];
-        header('Location: /task/create?id='.$categoryID);
+        header('Location: /task/create?id='.$_SESSION['currentCategoryID'].'&name='.$_SESSION['currentCategoryName'].'');
         exit();
     }
 

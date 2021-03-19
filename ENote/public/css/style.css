@@ -1,11 +1,10 @@
 body {
   background-color: #3450A1;
-  margin-top: 56px;
 }
 .userBtnA,.userBtnA:hover{
   font-size: 125%;
 }
-input[type=text],[type=password],[type=color],[type=button],[type= submit]{
+input[type=text],[type=password],[type=color],[type=button],[type= submit],[type=date]{
   display: block;
   color:#97B4FF;
   font-size: 100%;
@@ -59,9 +58,35 @@ nav{
   border-radius:5px;
   box-shadow: 0px 5px 5px rgba(0,0,0,0.25);
 }
-.alert{
-  color: red;
-  font-size: 150%;
+h2{
   text-align: center;
+  color: #97B4FF;
+}
+.alert-danger{
+  text-align: center;
+  width: 60%;
+  margin: auto;
+}
+.task{
+  font-size: 130%;
+  color:#97B4FF;
+  margin: 5% 0 5% 0;
+}
+p{
+  color: #97B4FF;
+  display: inline;
 }
 
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #041955;
+}
+::-webkit-scrollbar-thumb {
+  background: #3450A1;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #283E7A;
+}

@@ -87,5 +87,6 @@ class View
             require './../templates/sidepanel.php';
         }
         require $this->viewfile;
+        require './../templates/footer.php';
     }
 }

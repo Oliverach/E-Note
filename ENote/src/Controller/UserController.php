@@ -29,7 +29,7 @@ class UserController
     public function login()
     {
         if (isset($_SESSION['loggedIn'])) {
-            header('Location: /');
+            header('Location: /category/showAll');
             exit();
         } else {
             $view = new View('user/login');
@@ -50,10 +50,10 @@ class UserController
             $_SESSION['loggedIn'] = true;
             $_SESSION['userID'] = $user->id;
             SessionHelper::updateUserCategory();
-            header('Location: /');
+            header('Location: /category/showAll');
             exit();
         } else {
-            $_SESSION['LoginFailed'] = true;
+            $_SESSION['warning'] = "Login Failed";
             header('Location: /user/login');
             exit();
         }

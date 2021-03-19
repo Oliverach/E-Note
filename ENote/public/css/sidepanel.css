@@ -2,13 +2,23 @@
     background-color: #041955;
     position: fixed;
     left: 0;
-    top: 42px;
+    top: 46px;
     width: 300px;
-    height: 1080px;
-    min-width: 200px;
+    height: 100vh;
 }
 a{
     display:block;
     color: white;
     margin: 0;
+}
+.sidenavA{
+    font-size:30px;
+    width: 100%;
+    height: 100px;
+    color: #97B4FF;
+}
+.sidenavA:hover{
+    background-color: #283E7A;
+    color: #97B4FF;
+    text-decoration: none;
 }

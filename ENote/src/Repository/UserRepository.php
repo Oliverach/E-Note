@@ -27,11 +27,11 @@ class UserRepository extends Repository
             $this->registerUser($username, $password);
             header('Location: /user/login');
         } else if ($result->num_rows != 0) {
-            $_SESSION['usernameDuplicate'] = true;
+            $_SESSION['warning'] = "Username Unavailable";
             header('Location: /user/create');
             exit();
         } else {
-            $_SESSION['unmatchingPW'] = true;
+            $_SESSION['warning'] = "Passwords do no match";
             header('Location: /user/create');
             exit();}
     }

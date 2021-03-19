@@ -12,10 +12,7 @@ class SessionHelper
     {
         $categoryRepository = new CategoryRepository();
         $_SESSION['userCategory'] = $categoryRepository->getCategoriesByUserID($_SESSION['userID']);
-    }
-    public static function setDefaultSession(){
-        $_SESSION['LoginFailed'] = false;
-        $_SESSION['unmatchingPW'] = false;
-        $_SESSION['usernameDuplicate'] = false;
+        $_SESSION['taskAmountByCategory'] = $categoryRepository->getTaskAmountByCategory($_SESSION['userID']);
+        $_SESSION['taskOfCurrentDay'] = $categoryRepository->getTaskOfCurrentDay($_SESSION['userID']);
     }
 }

@@ -42,9 +42,8 @@ class DefaultController
         //   "default_index" rendern. Wie das genau funktioniert, ist in der
         //   View Klasse beschrieben.
         if(isset($_SESSION['loggedIn'])){
-            $view = new View('default/index');
+            $view = new View('category/allCategory');
         }else{
-            SessionHelper::setDefaultSession();
             $view = new View('user/login');
         }
         $view->title = 'Login';
