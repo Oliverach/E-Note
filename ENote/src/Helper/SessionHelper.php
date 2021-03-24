@@ -13,9 +13,10 @@ class SessionHelper
     {
         $categoryRepository = new CategoryRepository();
         $taskRepository = new TaskRepository();
-        $_SESSION['userCategory'] = $categoryRepository->getCategoriesByUserID($_SESSION['user']->id);
-        $_SESSION['taskAmountByCategory'] = $categoryRepository->getTaskAmountByCategory($_SESSION['user']->id);
-        $_SESSION['taskOfCurrentDay'] = $taskRepository->getTaskOfCurrentDay($_SESSION['user']->id);
-        $_SESSION['taskOfNextDay'] = $taskRepository->getTaskOfNextDay($_SESSION['user']->id);
+        $userId = $_SESSION['user']->id;
+        $_SESSION['userCategory'] = $categoryRepository->getCategoriesByUserID($userId);
+        $_SESSION['taskAmountByCategory'] = $categoryRepository->getTaskAmountByCategory($userId);
+        $_SESSION['taskOfCurrentDay'] = $taskRepository->getTaskOfCurrentDay($userId);
+        $_SESSION['taskOfNextDay'] = $taskRepository->getTaskOfNextDay($userId);
     }
 }

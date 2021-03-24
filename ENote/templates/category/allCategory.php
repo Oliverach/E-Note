@@ -57,7 +57,7 @@ if (isset($_SESSION['userCategory'])) {
                         foreach ($_SESSION['taskAmountByCategory'] as $task) {
                             ?>
                             <div class="categoryContainer">
-                                <div class="circle"></div>
+                                <i class="circle" style="border-color: <?= $task['color']?>; box-shadow:0 0 10px <?= $task["color"]?>"></i>
                                 <h5><?= $task['name'] ?></h5>
                                 <h5><?= $task['amount'] ?> on due</h5>
                             </div>

@@ -68,12 +68,12 @@ class CategoryRepository extends Repository
     }
     public function getTaskAmountByCategory($userID){
         $wantedStatus = 0;
-        $query = "SELECT category.name, COUNT(category_id) as amount FROM task JOIN category ON category.id = task.category_id WHERE category.user_id =? AND task.status =? GROUP BY category.name";
+        $query = "SELECT  category.name,category.color, COUNT(task.id) as amount FROM $this->tableName LEFT JOIN task ON category.id = task.category_id AND task.status = ? WHERE category.user_id = ? GROUP BY category.name";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('ii', $userID, $wantedStatus);
+        $rc = $statement->bind_param('ii', $wantedStatus, $userID);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
@@ -84,6 +84,28 @@ class CategoryRepository extends Repository
         }
         if ($result->num_rows > 0){
             $row = $result->fetch_all(MYSQLI_ASSOC);
+            return $row;
+        }
+    }
+
+    public function getCurrentCategoryByID($categoryID){
+
+        $query = "SELECT id, name, color FROM $this->tableName WHERE id =?;";
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        if (false === $statement) {
+            throw new Exception(ConnectionHandler::getConnection()->error);
+        }
+        $rc = $statement->bind_param('i', $categoryID);
+        if (false === $rc) {
+            throw new Exception($statement->error);
+        }
+        $statement->execute();
+        $result = $statement->get_result();
+        if (!$result) {
+            throw new Exception($statement->error);
+        }
+        if ($result->num_rows > 0){
+            $row = $result->fetch_object();
             return $row;
         }
     }

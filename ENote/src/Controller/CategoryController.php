@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Database\ConnectionHandler;
 use App\Helper\SessionHelper;
 use App\Repository\CategoryRepository;
-use App\Repository\UserRepository;
 use App\View\View;
 
 class CategoryController
@@ -14,6 +13,7 @@ class CategoryController
     {
         $view = new View('category/addCategory');
         $view->title = 'Add Category';
+        $_SESSION['creating'] = true;
         $view->display();
     }
     public function  showAll()
@@ -21,6 +21,7 @@ class CategoryController
         SessionHelper::updateUserContent();
         $view = new View('category/allCategory');
         $view->title = 'All Category';
+        $_SESSION['showingAll'] = true;
         $view->display();
     }
     public function doCreate(){
@@ -31,10 +32,12 @@ class CategoryController
         $categoryRepository->addCategory($name,$userID,$color);
         SessionHelper::updateUserContent();
         header("Location: /category/showAll ");
+        exit();
     }
     public function deleteCategory(){
         $categoryRepository = new CategoryRepository();
-        $categoryRepository->deleteCategoryById($_SESSION['currentCategoryID']);
+        $categoryRepository->deleteCategoryById($_SESSION['currentCategory']->id);
         header('Location: /category/showAll');
+        exit();
     }
 }

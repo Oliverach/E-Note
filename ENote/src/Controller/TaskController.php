@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Database\ConnectionHandler;
 use App\Helper\SessionHelper;
+use App\Repository\CategoryRepository;
 use App\Repository\TaskRepository;
 use App\View\View;
 class TaskController
@@ -14,10 +15,10 @@ class TaskController
             exit();
         }
         $taskRepository = new TaskRepository();
-        $_SESSION['currentCategoryID'] = (int)$_GET['id'];
-        $_SESSION['currentCategoryName'] = $_GET['name'];
-        $_SESSION['taskOfCurrentCategory'] = $taskRepository->getTaskOfCurrentCategory($_SESSION['currentCategoryID']);
-        $_SESSION['completedTaskOfCurrentCategory'] = $taskRepository->getCompletedTaskOfCurrentCategory($_SESSION['currentCategoryID']);
+        $categoryRepository = new CategoryRepository();
+        $_SESSION['currentCategory'] = $categoryRepository->getCurrentCategoryByID((int)$_GET['id']);
+        $_SESSION['taskOfCurrentCategory'] = $taskRepository->getTaskOfCurrentCategory($_SESSION['currentCategory']->id);
+        $_SESSION['completedTaskOfCurrentCategory'] = $taskRepository->getCompletedTaskOfCurrentCategory($_SESSION['currentCategory']->id);
         $view = new View('task/task');
         $view->title = 'Task';
         $view->display();
@@ -27,28 +28,28 @@ class TaskController
         $description = ConnectionHandler::getConnection()->escape_string($_POST['description']);
         $date = $_POST['date'];
         $taskRepository = new TaskRepository();
-        $taskRepository->addTask($description,$date,$_SESSION['currentCategoryID']);
+        $taskRepository->addTask($description,$date,$_SESSION['currentCategory']->id);
         SessionHelper::updateUserContent();
-        header('Location: /task/create?id='.$_SESSION['currentCategoryID'].'&name='.$_SESSION['currentCategoryName'].'');
+        header('Location: /task/create?id='.$_SESSION['currentCategory']->id);
         exit();
     }
     public function complete(){
         $taskID = (int)$_GET['id'];
         $taskRepository = new TaskRepository();
         $taskRepository->completeTask($taskID);
-        header('Location: /task/create?id='.$_SESSION['currentCategoryID'].'&name='.$_SESSION['currentCategoryName'].'');
+        header('Location: /task/create?id='.$_SESSION['currentCategory']->id);
         exit();
     }
     public function deleteTaskOfCategory(){
         $taskRepository = new TaskRepository();
-        $taskRepository->deleteTaskByCategoryID($_SESSION['currentCategoryID']);
-        header('Location: /task/create?id='.$_SESSION['currentCategoryID'].'&name='.$_SESSION['currentCategoryName'].'');
+        $taskRepository->deleteTaskByCategoryID($_SESSION['currentCategory']->id);
+        header('Location: /task/create?id='.$_SESSION['currentCategory']->id.'&name='.$_SESSION['currentCategory']->name.'');
     }
     public function deleteTaskByID(){
         $taskID = (int)$_GET['id'];
         $taskRepository = new TaskRepository();
         $taskRepository->deleteTaskByTaskID($taskID);
-        header('Location: /task/create?id='.$_SESSION['currentCategoryID'].'&name='.$_SESSION['currentCategoryName'].'');
+        header('Location: /task/create?id='.$_SESSION['currentCategory']->id.'&name='.$_SESSION['currentCategory']->name.'');
     }
 
 }

@@ -10,17 +10,13 @@
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
-    <script src="/js/extraStyling.js"></script>
     <title><?= $title; ?> | E-Note</title>
   </head>
   <body>
     <header>
       <nav class="navbar navbar-expand-md  fixed-top">
         <a class="nav mx-auto"  href="/category/showAll">E-NOTE</a>
-          <?php if (!(isset($_SESSION['loggedIn']))){
-          echo'<a href="/user/login" class="userBtnA"><input type="button" value="Log In" class="userBtn" ></a>';
-          } else {
-              ?>
+          <?php if (isset($_SESSION['loggedIn'])){?>
               <a href="/category/showAll" id="home">HOME</a>
               <div class="dropdown">
                   <button class="dropbtn"></button>

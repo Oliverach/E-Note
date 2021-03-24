@@ -8,7 +8,6 @@
 }
 
 .sidenavElement{
-    background-color: #041955;
     display: grid;
     grid-template-columns: 1fr 3fr;
     font-size:30px;
@@ -17,7 +16,7 @@
     color: #97B4FF;
 }
 .sidenavElement:hover{
-    background-color: #283E7A;
+    background-color: #1A2D62;
     color: #97B4FF;
     text-decoration: none;
 }

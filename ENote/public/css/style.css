@@ -13,7 +13,7 @@ input[type=button],[type= submit],[type=date], .option, .colorpicker, .button , 
   background-color: #3450A1;
   border: none;
   border-radius:20px;
-  box-shadow: 0px 5px 5px rgba(0,0,0,0.25);
+  box-shadow: 0 5px 5px rgba(0,0,0,0.25);
   margin: auto;
 }
 
@@ -38,7 +38,7 @@ input[type=color]{
   height:45%;
   background-color: #3450A1;
   border: none;
-  box-shadow: 0px 5px 5px rgba(0,0,0,0.25);
+  box-shadow: 0 5px 5px rgba(0,0,0,0.25);
   margin: auto;
 }
 input[type=submit],[type=button]{
@@ -55,20 +55,6 @@ nav{
   color:#97B4FF;
   font-size: 30px;
   text-decoration: none;
-}
-
-.userBtn{
-  position: absolute;
-  right: 20px;
-  top:5px;
-  width:100px;
-  height: 75%;
-  color:#97B4FF;
-  text-align: center;
-  background-color: #3450A1;
-  border: none;
-  border-radius:5px;
-  box-shadow: 0px 5px 5px rgba(0,0,0,0.25);
 }
 
 .alert-danger{
@@ -107,7 +93,10 @@ a{
   border-color: #EB06FF;
   border-width: 3px;
   border-radius: 50%;
-  box-shadow: 0px 0px 10px rgb(235, 6, 255);
+  box-shadow: 0 0 10px #EB06FF;
+}
+.active{
+  background-color: #283E7A;
 }
 .rectangle{
   margin:auto;
@@ -118,7 +107,7 @@ a{
   border-color: #EB06FF;
   border-width: 3px;
   border-radius: 25%;
-  box-shadow: 0px 0px 10px rgb(235, 6, 255);
+  box-shadow: 0 0 10px rgb(235, 6, 255);
 }
 #home{
   position: relative;
@@ -133,7 +122,7 @@ i{
 .bi-plus-square{
   color: #EB06FF;
 }
-.bi-person, .bi-lock, .bi-envelope, .bi-shield-lock, .addView{
+.bi-person, .bi-lock, .bi-envelope, .bi-shield-lock, .bi-folder-plus{
   color: #97B4FF;
 }
 
