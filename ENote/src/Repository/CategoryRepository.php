@@ -12,6 +12,7 @@ class CategoryRepository extends Repository
 
     public function addCategory( $name, $userID, $color)
     {
+        $this->checkCategoryAvailability($name, $userID);
         $query = "INSERT INTO $this->tableName(name, user_ID, color) VALUES (?,?,?) ";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
@@ -22,7 +23,27 @@ class CategoryRepository extends Repository
             throw new Exception($statement->error);
         }
         $statement->execute();
-
+    }
+    public function checkCategoryAvailability($categoryName,$userID){
+        $query = "SELECT name FROM $this->tableName where name =? AND user_id =?";
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        if (false === $statement) {
+            throw new Exception(ConnectionHandler::getConnection()->error);
+        }
+        $rc = $statement->bind_param('si', $categoryName,$userID);
+        if (false === $rc) {
+            throw new Exception($statement->error);
+        }
+        $statement->execute();
+        $result = $statement->get_result();
+        if (!$result) {
+            throw new Exception($statement->error);
+        }
+        if ($result->num_rows > 0){
+            $_SESSION['warning'] = "Category already exists";
+            header('Location: /user/showProfile');
+            exit();
+        }
     }
 
     public function getCategoriesByUserID($userID){
@@ -67,28 +88,17 @@ class CategoryRepository extends Repository
         }
     }
 
-    public function getTaskOfCurrentDay($userID)
+    public function deleteCategoryById($currentCategoryID)
     {
-        $wantedStatus = 0;
-        $query = "SELECT  task.id, description, category_id  FROM task JOIN category ON task.category_id = category.id WHERE dueDate = CAST(CURRENT_TIMESTAMP as date) AND user_id =? AND status =?";
+        $query = "DELETE FROM $this->tableName WHERE id=?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('ii', $userID, $wantedStatus);
+        $rc = $statement->bind_param('i', $currentCategoryID);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
         $statement->execute();
-        $result = $statement->get_result();
-        if (!$result) {
-            throw new Exception($statement->error);
-        }
-        if ($result->num_rows > 0){
-            $row = $result->fetch_all(MYSQLI_ASSOC);
-            return $row;
-        }
     }
-
-
 }

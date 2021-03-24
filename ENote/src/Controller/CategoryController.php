@@ -18,18 +18,23 @@ class CategoryController
     }
     public function  showAll()
     {
-        SessionHelper::updateUserCategory();
+        SessionHelper::updateUserContent();
         $view = new View('category/allCategory');
         $view->title = 'All Category';
         $view->display();
     }
     public function doCreate(){
         $name = ConnectionHandler::getConnection()->escape_string($_POST['name']);
-        $userID = $_SESSION["userID"];
+        $userID = $_SESSION["user"]->id;
         $color = ConnectionHandler::getConnection()->escape_string($_POST['color']);
         $categoryRepository = new CategoryRepository();
         $categoryRepository->addCategory($name,$userID,$color);
-        SessionHelper::updateUserCategory();
+        SessionHelper::updateUserContent();
         header("Location: /category/showAll ");
+    }
+    public function deleteCategory(){
+        $categoryRepository = new CategoryRepository();
+        $categoryRepository->deleteCategoryById($_SESSION['currentCategoryID']);
+        header('Location: /category/showAll');
     }
 }

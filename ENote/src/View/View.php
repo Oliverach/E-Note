@@ -84,7 +84,7 @@ class View
         extract($this->properties);
         require './../templates/header.php';
         if(isset($_SESSION['loggedIn'])){
-            require './../templates/sidepanel.php';
+            require './../templates/sidenav.php';
         }
         require $this->viewfile;
         require './../templates/footer.php';

@@ -28,7 +28,7 @@ class TaskController
         $date = $_POST['date'];
         $taskRepository = new TaskRepository();
         $taskRepository->addTask($description,$date,$_SESSION['currentCategoryID']);
-        SessionHelper::updateUserCategory();
+        SessionHelper::updateUserContent();
         header('Location: /task/create?id='.$_SESSION['currentCategoryID'].'&name='.$_SESSION['currentCategoryName'].'');
         exit();
     }
@@ -38,6 +38,17 @@ class TaskController
         $taskRepository->completeTask($taskID);
         header('Location: /task/create?id='.$_SESSION['currentCategoryID'].'&name='.$_SESSION['currentCategoryName'].'');
         exit();
+    }
+    public function deleteTaskOfCategory(){
+        $taskRepository = new TaskRepository();
+        $taskRepository->deleteTaskByCategoryID($_SESSION['currentCategoryID']);
+        header('Location: /task/create?id='.$_SESSION['currentCategoryID'].'&name='.$_SESSION['currentCategoryName'].'');
+    }
+    public function deleteTaskByID(){
+        $taskID = (int)$_GET['id'];
+        $taskRepository = new TaskRepository();
+        $taskRepository->deleteTaskByTaskID($taskID);
+        header('Location: /task/create?id='.$_SESSION['currentCategoryID'].'&name='.$_SESSION['currentCategoryName'].'');
     }
 
 }

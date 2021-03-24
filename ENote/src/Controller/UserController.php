@@ -20,10 +20,10 @@ class UserController
     public function doCreate()
     {
         $username = ConnectionHandler::getConnection()->escape_string($_POST['username']);
-        $password = sha1($_POST['password']);
-        $confirm_password = sha1($_POST['confirm_password']);
+        $password = hash('sha256', $_POST['password']);
+        $confirm_password = hash('sha256', $_POST['confirm_password']);
         $userRepository = new UserRepository();
-        $userRepository->createUser($username, $password, $confirm_password);
+        $userRepository->registerUser($username, $password, $confirm_password);
     }
 
     public function login()
@@ -42,14 +42,14 @@ class UserController
     {
         $username = ConnectionHandler::getConnection()->escape_string($_POST['username']);
         //password_hash("21334", PASSWORD_ARGON2I);
-        $password = sha1($_POST['password']);
+        $password = hash('sha256', $_POST['password']);
         $userRepository = new UserRepository();
-        $user = $userRepository->loginUser($username, $password);
+        $user = $userRepository->checkUserExistance($username, $password);
 
         if ($user->id > 0) {
             $_SESSION['loggedIn'] = true;
-            $_SESSION['userID'] = $user->id;
-            SessionHelper::updateUserCategory();
+            $_SESSION['user'] = $user;
+            SessionHelper::updateUserContent();
             header('Location: /category/showAll');
             exit();
         } else {
@@ -65,5 +65,35 @@ class UserController
         session_unset();
         header('Location: /user/login');
         exit();
+    }
+    public function showProfile(){
+        $view = new View('user/profile');
+        $view->title = 'Sign In';
+        $view->display();
+    }
+
+    public function updateUserInfo(){
+        $view = new View('user/changeProfile');
+        $view->title = 'User Info';
+        $view->display();
+    }
+    public function doUpdateUserInfo(){
+        $email = ConnectionHandler::getConnection()->escape_string($_POST['email']);
+        $password = hash('sha256', $_POST['password']);
+        $userRepository = new UserRepository();
+        $userRepository->updateUserInfo($email, $password);
+
+    }
+    public function changePassword(){
+        $view = new View('user/changePassword');
+        $view->title = 'New Password';
+        $view->display();
+    }
+    public function doChangePassword(){
+        $newPW = hash('sha256', $_POST['newPW']);
+        $confirmNewPW = hash('sha256', $_POST['confirmNewPW']);
+        $currentPW = hash('sha256', $_POST['currentPW']);
+        $userRepository = new UserRepository();
+        $userRepository->changeUserPassword($newPW, $confirmNewPW, $currentPW);
     }
 }
