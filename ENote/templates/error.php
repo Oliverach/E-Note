@@ -1,4 +1,4 @@
-<article>
+<article class="colContainer">
 	<?php if (!empty($userMessage)): ?>
 		<h2 class="item title"><?= $userMessage; ?></h2>
     <h3 class="item title"><?= $exception->getMessage(); ?></h3>

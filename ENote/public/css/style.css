@@ -2,10 +2,9 @@ body {
   background-color: #3450A1;
   font-family: 'Roboto', sans-serif;
 }
-.userBtnA,.userBtnA:hover{
-  font-size: 125%;
-}
-input[type=button],[type= submit],[type=date], .option, .colorpicker, .button , .usernameContainer{
+
+
+input[type= submit],[type=date], .option, .option3, .colorpicker , .usernameContainer, .button{
   display: block;
   color:#97B4FF;
   font-size: 100%;
@@ -16,8 +15,7 @@ input[type=button],[type= submit],[type=date], .option, .colorpicker, .button , 
   box-shadow: 0 5px 5px rgba(0,0,0,0.25);
   margin: auto;
 }
-
-input[type=date], .colorpicker,.option, .usernameContainer{
+input[type=date], .colorpicker,.option,.option3, .usernameContainer{
   width: 80%;
   height:50%;
   font-size: 30px;
@@ -41,14 +39,22 @@ input[type=color]{
   box-shadow: 0 5px 5px rgba(0,0,0,0.25);
   margin: auto;
 }
-input[type=submit],[type=button]{
-  width: 20%;
-  height:45%;
-
+.SignInButtons{
+  width:60%  !important;
 }
+.button{
+  display:grid !important;
+}
+input[type=submit], .button{
+  font-size: 100%;
+  width: 25%;
+  height:45%;
+}
+
 nav{
   background-color:  #041955;
   max-height:48px;
+  box-shadow: 0 5px 5px rgba(0,0,0,0.25);
 }
 .nav,.nav:hover{
   font-weight:500;
@@ -56,22 +62,25 @@ nav{
   font-size: 30px;
   text-decoration: none;
 }
-
 .alert-danger{
   text-align: center;
+
   width: 60%;
   position:absolute;
   top:46px;
   left: 50%;
   transform: translatex(-50%);
 }
-
+a, a:hover{
+  text-decoration: none;
+  color:#97B4FF;
+}
 h2{
   margin: 2% 0 0 0;
   text-align: center;
   color: #97B4FF;
 }
-h4, h5{
+h4, h5, p{
   color: #97B4FF;
   margin-top:auto;
   margin-bottom:auto;
@@ -81,21 +90,16 @@ h4, h5{
   color: #97B4FF;
   text-align: center;
 }
-a{
-  text-decoration: none;
-}
 .circle{
   margin:auto;
   width: 30px;
   height: 30px;
   background-color: transparent;
   border-style: solid;
-  border-color: #EB06FF;
   border-width: 3px;
   border-radius: 50%;
-  box-shadow: 0 0 10px #EB06FF;
 }
-.active{
+.active, input[type=submit]:hover, button:hover,.option3:hover{
   background-color: #283E7A;
 }
 .rectangle{

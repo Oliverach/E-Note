@@ -20,16 +20,16 @@
     if (isset($_SESSION['showingAll'])) {
         unset ($_SESSION['currentCategory']);
         ?>
-        <a href="/category/showAll" class="sidenavElement active">
-            <div class="rectangle"></div>
+        <a href="/category" class="sidenavElement active">
+            <i class="rectangle"></i>
             <h4>All Category</h4>
         </a>
         <?php
         unset($_SESSION['showingAll']);
     } else {
         ?>
-        <a href="/category/showAll" class="sidenavElement">
-            <div class="rectangle"></div>
+        <a href="/category" class="sidenavElement">
+            <i class="rectangle"></i>
             <h4>All Category</h4>
         </a>
         <?php
@@ -42,23 +42,23 @@
             <?php
             if (isset($_SESSION['userCategory'])) {
                 foreach ($_SESSION['userCategory'] as $category) {
-                    if(empty($_SESSION['currentCategory']->id)){
+                    if (empty($_SESSION['currentCategory']) || $_SESSION['currentCategory']->id != $category['id']){
                         $active = "";
-                    }else if($_SESSION['currentCategory']->id == $category['id']){
+                    }else if ($_SESSION['currentCategory']->id == $category['id']){
                         $active = "active";
                     }
-                    ?>
-                    <a href="/task/create?id=<?= $category['id'] ?>"
-                       class="sidenavElement <?= $active ?>">
-                        <i class="circle" style="border-color: <?= $category['color'] ?>; box-shadow:0 0 10px <?= $category['color'] ?> ;"></i>
-                        <h4><?= $category['name'] ?></h4>
-                    </a>
-                    <?php
+                        ?>
+                        <a href="/task/?category_id=<?= $category['id'] ?>"
+                           class="sidenavElement <?= $active ?>">
+                            <i class="circle" style="border-color: <?= $category['color'] ?>; box-shadow:0 0 10px <?= $category['color'] ?> ;"></i>
+                            <h4 title="<?= $category['name'] ?>"><?= strlen($category['name']) <= 15 ? $category['name'] : substr($category['name'], 0, 15)."..." ?></h4>
+                        </a>
+                        <?php
 
+                    }
                 }
-            }
+
             ?>
         </div>
     </div>
 </div>
-

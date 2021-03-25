@@ -87,7 +87,7 @@ class UserRepository extends Repository
             }
             $statement->execute();
             $_SESSION['user'] = $this->checkUserExistance($_SESSION['user']->username, $_SESSION['user']->password);
-            header('Location: /user/showProfile');
+            header('Location: /user');
             exit();
         } else{
             $_SESSION['warning'] = "Password Incorrect";
@@ -117,7 +117,7 @@ class UserRepository extends Repository
             }
             $statement->execute();
             $_SESSION['user'] = $this->checkUserExistance($_SESSION['user']->username, $newPW);
-            header('Location: /user/showProfile');
+            header('Location: /user');
             exit();
         } else if($confirmNewPW == $newPW){
             $_SESSION['warning'] = "Passwords do not match";

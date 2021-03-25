@@ -3,7 +3,8 @@
         <h2>New Task</h2>
         <form action="/task/addTask" method="POST" class="layout3">
             <div class="iconInputContainer">
-                <i class="circle" style="border-color: <?= $_SESSION['currentCategory']->color?>; box-shadow:0 0 10px <?= $_SESSION['currentCategory']->color?>"></i>
+                <i class="circle"
+                   style="border-color: <?= $_SESSION['currentCategory']->color ?>; box-shadow:0 0 10px <?= $_SESSION['currentCategory']->color ?>"></i>
                 <input type="text" placeholder="Task Description" name="description" required>
             </div>
 
@@ -12,7 +13,7 @@
         </form>
     </div>
     <div class="taskScrollWidget">
-        <h2><?= $_SESSION['currentCategory']->name ?></h2>
+        <h2 title="<?= $_SESSION['currentCategory']->name ?>"><?= strlen($_SESSION['currentCategory']->name) <= 20 ? $_SESSION['currentCategory']->name : substr($_SESSION['currentCategory']->name, 0, 20)."..." ?></h2>
         <div class="taskScroller">
             <?php
             if (isset($_SESSION['taskOfCurrentCategory'])) {
@@ -20,10 +21,11 @@
                 <?php
                 foreach ($_SESSION['taskOfCurrentCategory'] as $task) {
                     ?>
-                    <a href="/task/complete?id=<?= $task['id'] ?>" class="taskContainer">
-                        <i class="circle" style="border-color: <?= $_SESSION['currentCategory']->color?>; box-shadow:0 0 10px <?= $_SESSION['currentCategory']->color?>"></i>
-                        <h5><?= $task['description'] ?></h5>
-                    </a>
+                    <div class="taskContainer" onclick="confirmCompleteTask('/task/complete?id=<?= $task['id'] ?>')">
+                        <i class="circle" style="border-color: <?= $_SESSION['currentCategory']->color ?>; box-shadow:0 0 10px <?= $_SESSION['currentCategory']->color ?>"></i>
+                        <h5 title="<?= $task['description'] ?>"><?= strlen($task['description']) <= 30 ? $task['description'] : substr($task['description'], 0, 30)."..." ?></h5>
+                        <h5><?= $task['dueDate'] ?></h5>
+                    </div>
                     <?php
                 }
             }
@@ -33,8 +35,9 @@
     <div class="widget2">
         <h2>Options</h2>
         <div class="layout2">
-            <a href="/task/deleteTaskOfCategory" class="option"><h5>Clear Task</h5></a>
-            <a href="/category/deleteCategory" class="option"><h5>Delete Current Category</h5></a>
+            <div class="option3" onclick="confirmClearTask('/task/deleteTaskOfCategory')"><h5>Clear Task</h5></div>
+            <div class="option3" onclick="confirmDeleteCategory('/category/deleteCategory')"><h5>Delete Current
+                    Category</h5></div>
         </div>
     </div>
     <div class="taskScrollWidget">
@@ -44,11 +47,10 @@
             if (isset($_SESSION['completedTaskOfCurrentCategory'])) {
                 foreach ($_SESSION['completedTaskOfCurrentCategory'] as $completedTask) {
                     ?>
-                    <a href="/task/deleteTaskByID?id=<?= $completedTask['id'] ?>"
-                       class="taskContainer">
-                        <i class="circle" style="border-color: <?= $_SESSION['currentCategory']->color?>; box-shadow:0 0 10px <?= $_SESSION['currentCategory']->color?>"></i>
-                        <h5><?= $completedTask['description'] ?></h5>
-                    </a>
+                    <div class="taskContainer" onclick="confirmDeleteTask('/task/deleteTaskByID?id=<?= $completedTask['id'] ?>')">
+                        <i class="circle" style="border-color: <?= $_SESSION['currentCategory']->color ?>; box-shadow:0 0 10px <?= $_SESSION['currentCategory']->color ?>"></i>
+                        <h5 title="<?= $completedTask['description'] ?>"><?= strlen($completedTask['description']) <= 30 ? $completedTask['description'] : substr($completedTask['description'], 0, 30)."..." ?></h5>
+                    </div>
                     <?php
                 }
             }

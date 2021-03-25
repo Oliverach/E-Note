@@ -10,11 +10,8 @@
                 <i class="bi bi-lock"></i>
                 <input type="password" name="password" placeholder="Password" required>
             </div>
-
             <input type="submit" value="Login" class="defaultBtn">
-            <a href="/user/create">
-                <input type="button" value="Register">
-            </a>
+            <a href="/user/create" class="button"><p>Register</p></a>
         </form>
     </div>
 </div>

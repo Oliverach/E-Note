@@ -16,8 +16,15 @@
                 <input id="confirm_password" name="confirm_password" type="password"  placeholder="Confirm Password" required>
             </div>
 
+            <div class="row">
+                <div class="col">
+                    <a href="/user/login" class="SignInButtons button"><p>Log In</p></a>
+                </div>
+                <div class="col">
+                    <input class="SignInButtons button" type="submit" value="Sign In">
+                </div>
+            </div>
 
-            <input type="submit" value="Sign In">
         </form>
     </div>
 </div>

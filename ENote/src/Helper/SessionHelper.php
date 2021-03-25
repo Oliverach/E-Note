@@ -19,4 +19,11 @@ class SessionHelper
         $_SESSION['taskOfCurrentDay'] = $taskRepository->getTaskOfCurrentDay($userId);
         $_SESSION['taskOfNextDay'] = $taskRepository->getTaskOfNextDay($userId);
     }
+    public static function updateSpecificCategoryContent(){
+        $categoryRepository = new CategoryRepository();
+        $taskRepository = new TaskRepository();
+        $_SESSION['currentCategory'] = $categoryRepository->getCurrentCategoryByID((int)$_GET['category_id']);
+        $_SESSION['taskOfCurrentCategory'] = $taskRepository->getTaskOfCurrentCategory($_SESSION['currentCategory']->id);
+        $_SESSION['completedTaskOfCurrentCategory'] = $taskRepository->getCompletedTaskOfCurrentCategory($_SESSION['currentCategory']->id);
+    }
 }

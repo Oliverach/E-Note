@@ -2,7 +2,7 @@
     <div class="widget1">
         <h2>Personal Info</h2>
         <div class="userProfileContainer">
-            <div class="circle"></div>
+            <img src="/images/profilePicture.png" class="profileIcon" alt="profileIcon">
             <div class="usernameContainer">
                 <h4 class="leftPositionedText">Username:</h4>
                 <h5 class="leftPositionedText"><?= $_SESSION['user']->username ?></h5>

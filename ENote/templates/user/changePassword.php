@@ -14,7 +14,14 @@
                 <i class="bi bi-lock"></i>
                 <input type="password" name="currentPW" placeholder="Current Password" required>
             </div>
-            <input type="submit" value="Change Password" class="defaultBtn">
+            <div class="row">
+                <div class="col">
+                    <a href="/user" class="SignInButtons button"><p>Return</p></a>
+                </div>
+                <div class="col">
+                    <input type="submit" class="SignInButtons button" value="Change Password">
+                </div>
+            </div>
         </form>
     </div>
 </div>

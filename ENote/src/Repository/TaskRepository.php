@@ -87,7 +87,7 @@ class TaskRepository extends Repository
     public function getTaskOfCurrentDay($userID)
     {
         $wantedStatus = 0;
-        $query = "SELECT  task.id, description, category_id  FROM $this->tableName JOIN category ON task.category_id = category.id WHERE dueDate = CAST(CURRENT_TIMESTAMP as date) AND user_id =? AND status =?";
+        $query = "SELECT  task.id, description, category_id, category.color, dueDate  FROM $this->tableName JOIN category ON task.category_id = category.id WHERE dueDate = CAST(CURRENT_TIMESTAMP as date) AND user_id =? AND status =?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
@@ -110,7 +110,7 @@ class TaskRepository extends Repository
     {
         $wantedStatus = 0;
         $timeAddition = 1;
-        $query = "SELECT  task.id, description, category_id  FROM $this->tableName JOIN category ON task.category_id = category.id WHERE dueDate = DATE_ADD(CAST(CURRENT_TIMESTAMP as date), INTERVAL ? DAY) AND user_id=? AND status =?";
+        $query = "SELECT  task.id, description, category_id, category.color, dueDate  FROM $this->tableName JOIN category ON task.category_id = category.id WHERE dueDate = DATE_ADD(CAST(CURRENT_TIMESTAMP as date), INTERVAL ? DAY) AND user_id=? AND status =?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
@@ -155,6 +155,28 @@ class TaskRepository extends Repository
             throw new Exception($statement->error);
         }
         $statement->execute();
+    }
+
+    public function checkIfTaskExists($task_id)
+    {
+        $query = "SELECT  task.id  FROM $this->tableName WHERE task.id=?";
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        if (false === $statement) {
+            throw new Exception(ConnectionHandler::getConnection()->error);
+        }
+        $rc = $statement->bind_param('i', $task_id);
+        if (false === $rc) {
+            throw new Exception($statement->error);
+        }
+        $statement->execute();
+        $result = $statement->get_result();
+        if (!$result) {
+            throw new Exception($statement->error);
+        }
+        if ($result->num_rows > 0){
+            $row = $result->fetch_all(MYSQLI_ASSOC);
+            return $row;
+        }
     }
 
 }

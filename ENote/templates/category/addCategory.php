@@ -9,7 +9,7 @@
 
             <div class="colorpicker">
                 <h5>Select Color:</h5>
-                <input type="color" name="color" value="#00ff00" required>
+                <input type="color" name="color" value="#00ff00">
             </div>
             <input type="submit" value="Create">
         </div>

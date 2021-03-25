@@ -4,14 +4,25 @@ namespace App\Controller;
 
 use App\Database\ConnectionHandler;
 use App\Helper\SessionHelper;
+use App\Helper\ValidationHelper;
 use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
 use App\View\View;
 
 class UserController
 {
+    public function index()
+    {
+        unset($_SESSION['currentCategory']);
+        ValidationHelper::checkIfUserLoggedIn();
+        $view = new View('user/profile');
+        $view->title = 'Personal Info';
+        $view->display();
+    }
+
     public function create()
     {
+        ValidationHelper::redirectIfLoggedIn();
         $view = new View('user/signin');
         $view->title = 'Sign In';
         $view->display();
@@ -28,14 +39,10 @@ class UserController
 
     public function login()
     {
-        if (isset($_SESSION['loggedIn'])) {
-            header('Location: /category/showAll');
-            exit();
-        } else {
-            $view = new View('user/login');
-            $view->title = 'Login';
-            $view->display();
-        }
+        ValidationHelper::redirectIfLoggedIn();
+        $view = new View('user/login');
+        $view->title = 'Login';
+        $view->display();
     }
 
     public function doLogin()
@@ -50,7 +57,7 @@ class UserController
             $_SESSION['loggedIn'] = true;
             $_SESSION['user'] = $user;
             SessionHelper::updateUserContent();
-            header('Location: /category/showAll');
+            header('Location: /category');
             exit();
         } else {
             $_SESSION['warning'] = "Login Failed";
@@ -66,30 +73,36 @@ class UserController
         header('Location: /user/login');
         exit();
     }
-    public function showProfile(){
-        $view = new View('user/profile');
-        $view->title = 'Sign In';
+
+    public function updateUserInfo()
+    {
+        ValidationHelper::checkIfUserLoggedIn();
+        $view = new View('user/changeProfile');
+        $view->title = 'Personal Info';
         $view->display();
     }
 
-    public function updateUserInfo(){
-        $view = new View('user/changeProfile');
-        $view->title = 'User Info';
-        $view->display();
-    }
-    public function doUpdateUserInfo(){
+    public function doUpdateUserInfo()
+    {
+        ValidationHelper::checkIfUserLoggedIn();
         $email = ConnectionHandler::getConnection()->escape_string($_POST['email']);
         $password = hash('sha256', $_POST['password']);
         $userRepository = new UserRepository();
         $userRepository->updateUserInfo($email, $password);
 
     }
-    public function changePassword(){
+
+    public function changePassword()
+    {
+        ValidationHelper::checkIfUserLoggedIn();
         $view = new View('user/changePassword');
-        $view->title = 'New Password';
+        $view->title = 'Change Password';
         $view->display();
     }
-    public function doChangePassword(){
+
+    public function doChangePassword()
+    {
+        ValidationHelper::checkIfUserLoggedIn();
         $newPW = hash('sha256', $_POST['newPW']);
         $confirmNewPW = hash('sha256', $_POST['confirmNewPW']);
         $currentPW = hash('sha256', $_POST['currentPW']);
