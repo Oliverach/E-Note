@@ -77,7 +77,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 -- User Creation
 -- -----------------------------------------------------
-CREATE USER enote_user IDENTIFIED BY "";
+CREATE USER enote_user IDENTIFIED BY "1234";
 GRANT
   SELECT,
   INSERT,
