@@ -34,8 +34,13 @@
 </header>
 <?php
 if (isset($_SESSION['warning'])) {
+    if (isset($_SESSION['loggedIn'])) {
+        $position = "55%";
+    } else {
+        $position = "50%";
+    }
     ?>
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger" style="left:<?= $position ?>" role="alert">
         <?= $_SESSION['warning'] ?>
     </div>
     <?php

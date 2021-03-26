@@ -9,11 +9,13 @@ if (isset($_SESSION['userCategory'])) {
                     <?php
                     if (isset($_SESSION['taskOfCurrentDay'])) {
                         foreach ($_SESSION['taskOfCurrentDay'] as $task) {
+                            $description = htmlentities($task['description']);
+                            $dueDate = htmlentities($task['dueDate']);
                             ?>
                             <div class="taskContainer" onclick="confirmCompleteTask('/task/complete?id=<?= $task['id'] ?>')">
                                 <i class="circle" style="border-color: <?= $task['color'] ?>; box-shadow:0 0 10px <?= $task['color'] ?> ;"></i>
-                                <h5 title="<?= $task['description'] ?>"><?= strlen($task['description']) <= 30 ? $task['description'] : substr($task['description'], 0, 30)."..." ?></h5>
-                                <h5><?= $task['dueDate'] ?></h5>
+                                <h5 title="<?= $description ?>"><?= strlen($description) <= 30 ? $description : substr($description, 0, 30)."..." ?></h5>
+                                <h5><?= $dueDate ?></h5>
                             </div>
                             <?php
                         }
@@ -28,11 +30,13 @@ if (isset($_SESSION['userCategory'])) {
                     <?php
                     if (isset($_SESSION['taskOfNextDay'])) {
                         foreach ($_SESSION['taskOfNextDay'] as $task) {
+                            $description = htmlentities($task['description']);
+                            $dueDate = htmlentities($task['dueDate']);
                             ?>
                             <div onclick="confirmCompleteTask('/task/complete?id=<?= $task['id'] ?>')" class="taskContainer">
                                 <i class="circle" style="border-color: <?= $task['color'] ?>; box-shadow:0 0 10px <?= $task['color'] ?> ;"></i>
-                                <h5 title="<?= $task['description'] ?>"><?= strlen($task['description']) <= 30 ? $task['description'] : substr($task['description'], 0, 30)."..." ?></h5>
-                                <h5><?= $task['dueDate'] ?></h5>
+                                <h5 title="<?= $description ?>"><?= strlen($description) <= 30 ? $description : substr($description, 0, 30)."..." ?></h5>
+                                <h5><?= $dueDate ?></h5>
                             </div>
                             <?php
                         }
@@ -48,12 +52,14 @@ if (isset($_SESSION['userCategory'])) {
                 <div class="categoryScroller">
                     <?php
                     if (isset($_SESSION['taskAmountByCategory'])) {
-                        foreach ($_SESSION['taskAmountByCategory'] as $task) {
+                        foreach ($_SESSION['taskAmountByCategory'] as $category) {
+                            $name = htmlentities($category['name']);
+                            $amount = htmlentities($category['amount']);
                             ?>
-                            <a href="/task/?category_id=<?= $task['category_id'] ?>" class="categoryContainer">
-                                <i class="circle" style="border-color: <?= $task['color']?>; box-shadow:0 0 10px <?= $task["color"]?>"></i>
-                                <h5 title="<?= $task['name'] ?>"><?= strlen($task['name']) <= 10 ? $task['name'] : substr($task['name'], 0, 10)."..." ?></h5>
-                                <h5><?= $task['amount'] ?> on due</h5>
+                            <a href="/task/?category_id=<?= $category['category_id'] ?>" class="categoryContainer">
+                                <i class="circle" style="border-color: <?= $category['color']?>; box-shadow:0 0 10px <?= $category["color"]?>"></i>
+                                <h5 title="<?= $name ?>"><?= strlen($name) <= 10 ? $name : substr($name, 0, 10)."..." ?></h5>
+                                <h5><?= $amount ?> on due</h5>
                             </a>
                             <?php
                         }

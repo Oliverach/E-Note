@@ -13,7 +13,7 @@ class CategoryRepository extends Repository
     public function addCategory( $name, $user_id, $color)
     {
         $this->checkCategoryAvailability($name, $user_id);
-        $query = "INSERT INTO $this->tableName(name, user_ID, color) VALUES (?,?,?) ";
+        $query = "INSERT INTO $this->tableName(name, user_id, color) VALUES (?,?,?) ";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
@@ -67,6 +67,7 @@ class CategoryRepository extends Repository
             return $row;
         }
     }
+
     public function getTaskAmountByCategory($user_id){
         $wantedStatus = 0;
         $query = "SELECT  category.name,category.color,category.id as category_id, COUNT(task.id) as amount FROM $this->tableName LEFT JOIN task ON category.id = task.category_id AND task.status = ? WHERE category.user_id = ? GROUP BY category.name";
@@ -91,12 +92,12 @@ class CategoryRepository extends Repository
 
     public function getCurrentCategoryByID($category_id){
 
-        $query = "SELECT id, name, color FROM $this->tableName WHERE id =?;";
+        $query = "SELECT id, name, color FROM $this->tableName WHERE id =? AND user_id =?;";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('i', $category_id);
+        $rc = $statement->bind_param('ii', $category_id, $_SESSION['user']->id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
@@ -113,12 +114,12 @@ class CategoryRepository extends Repository
 
     public function deleteCategoryById($currentCategory_id)
     {
-        $query = "DELETE FROM $this->tableName WHERE id=?";
+        $query = "DELETE FROM $this->tableName WHERE id=? AND user_id=?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('i', $currentCategory_id);
+        $rc = $statement->bind_param('ii', $currentCategory_id, $_SESSION['user']->id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
@@ -127,12 +128,12 @@ class CategoryRepository extends Repository
 
     public function checkIfCategoryExists($category_id)
     {
-        $query = "SELECT id FROM $this->tableName WHERE id =?;";
+        $query = "SELECT id FROM $this->tableName WHERE id =? AND user_id =?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('i', $category_id);
+        $rc = $statement->bind_param('ii', $category_id, $_SESSION['user']->id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }

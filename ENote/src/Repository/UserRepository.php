@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Database\ConnectionHandler;
 use App\Helper\SessionHelper;
+use App\Helper\ValidationHelper;
 use Exception;
 
 
@@ -74,7 +75,8 @@ class UserRepository extends Repository
 
     public function updateUserInfo($email,$password){
         $user = $this->checkUserExistance($_SESSION['user']->username,$password);
-        if ($user){
+        $emailAvailability = $this->checkEMailAvailability($email);
+        if ($user && $emailAvailability){
             $query = "UPDATE $this->tableName SET email =? WHERE username=?";
 
             $statement = ConnectionHandler::getConnection()->prepare($query);
@@ -89,10 +91,34 @@ class UserRepository extends Repository
             $_SESSION['user'] = $this->checkUserExistance($_SESSION['user']->username, $_SESSION['user']->password);
             header('Location: /user');
             exit();
-        } else{
+        }else{
             $_SESSION['warning'] = "Password Incorrect";
             header('Location: /user/updateUserInfo');
             exit();
+        }
+    }
+
+    public function checkEMailAvailability($email){
+        $query = "SELECT email FROM $this->tableName where email=?";
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        if (false === $statement) {
+            throw new Exception(ConnectionHandler::getConnection()->error);
+        }
+        $rc = $statement->bind_param('s', $email);
+        if (false === $rc) {
+            throw new Exception($statement->error);
+        }
+        $statement->execute();
+        $result = $statement->get_result();
+        if (!$result) {
+            throw new Exception($statement->error);
+        }
+        if ($result->num_rows > 0){
+            $_SESSION['warning'] = "E-Mail unavailable";
+            header('Location: /user/updateUserInfo');
+            exit();
+        }else{
+            return true;
         }
     }
 
@@ -119,7 +145,7 @@ class UserRepository extends Repository
             $_SESSION['user'] = $this->checkUserExistance($_SESSION['user']->username, $newPW);
             header('Location: /user');
             exit();
-        } else if($confirmNewPW == $newPW){
+        } else if($confirmNewPW != $newPW){
             $_SESSION['warning'] = "Passwords do not match";
             header('Location: /user/changePassword');
             exit();

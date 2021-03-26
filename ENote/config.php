@@ -21,7 +21,7 @@ return array(
     'database' => array(
         'host'     => 'localhost',
         'username' => 'enote_user',
-        'password' => '',
+        'password' => '1234',
         'database' => 'enotedb',
     ),
 

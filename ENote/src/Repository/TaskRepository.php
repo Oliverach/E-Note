@@ -10,7 +10,7 @@ class TaskRepository extends Repository
 {
     protected $tableName = "task";
 
-    public function addTask($description, $date, $categoryID)
+    public function addTask($description, $date, $category_id)
     {
         $defaultStatus = 0;
         $query = "INSERT INTO $this->tableName (description, dueDate, status, category_id)VALUES (?,?,?,?)";
@@ -19,20 +19,24 @@ class TaskRepository extends Repository
         if ($statement == false) {
             throw new Exception($connection->error);
         }
-        $statement->bind_param('ssii', $description, $date,$defaultStatus,$categoryID);
-        // Das Statement absetzen
+        $rc = $statement->bind_param('ssii', $description, $date, $defaultStatus, $category_id);
+        if (false === $rc) {
+            throw new Exception($statement->error);
+        }
         $statement->execute();
     }
 
-    public function getTaskOfCurrentCategory($currentCategoryID)
+
+
+    public function getTaskOfCurrentCategory($currentCategory_id)
     {
         $defaultStatus = 0;
-        $query = "SELECT * FROM $this->tableName where category_id =? AND status = ?";
+        $query = "SELECT task.id task_id, task.*, category.id c_id, category.* FROM $this->tableName JOIN category ON category.id = category_id where category_id =? AND status = ? AND user_id =?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('ii', $currentCategoryID,$defaultStatus);
+        $rc = $statement->bind_param('iii', $currentCategory_id, $defaultStatus, $_SESSION['user']->id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
@@ -41,36 +45,36 @@ class TaskRepository extends Repository
         if (!$result) {
             throw new Exception($statement->error);
         }
-        if ($result->num_rows > 0){
+        if ($result->num_rows > 0) {
             $row = $result->fetch_all(MYSQLI_ASSOC);
             return $row;
         }
     }
 
-    public function completeTask($taskID)
+    public function completeTask($task_id)
     {
         $completedStatus = 1;
-        $query = "UPDATE $this->tableName SET status =? WHERE id=?";
+        $query = "UPDATE $this->tableName JOIN category ON category.id = category_id SET status =? WHERE task.id=? AND user_id=?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('ii', $completedStatus,$taskID);
+        $rc = $statement->bind_param('iii', $completedStatus, $task_id, $_SESSION['user']->id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
         $statement->execute();
     }
 
-    public function getCompletedTaskOfCurrentCategory($currentCategoryID)
+    public function getCompletedTaskOfCurrentCategory($currentCategory_id)
     {
         $wantedStatus = 1;
-        $query = "SELECT * FROM $this->tableName where category_id =? AND status = ?";
+        $query = "SELECT task.id task_id, task.*, category.id c_id, category.* FROM $this->tableName JOIN category ON category.id = category_id WHERE category_id =? AND status = ? AND user_id =? ";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('ii', $currentCategoryID,$wantedStatus);
+        $rc = $statement->bind_param('iii', $currentCategory_id, $wantedStatus, $_SESSION['user']->id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
@@ -79,12 +83,13 @@ class TaskRepository extends Repository
         if (!$result) {
             throw new Exception($statement->error);
         }
-        if ($result->num_rows > 0){
+        if ($result->num_rows > 0) {
             $row = $result->fetch_all(MYSQLI_ASSOC);
             return $row;
         }
     }
-    public function getTaskOfCurrentDay($userID)
+
+    public function getTaskOfCurrentDay($user_id)
     {
         $wantedStatus = 0;
         $query = "SELECT  task.id, description, category_id, category.color, dueDate  FROM $this->tableName JOIN category ON task.category_id = category.id WHERE dueDate = CAST(CURRENT_TIMESTAMP as date) AND user_id =? AND status =?";
@@ -92,7 +97,7 @@ class TaskRepository extends Repository
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('ii', $userID, $wantedStatus);
+        $rc = $statement->bind_param('ii', $user_id, $wantedStatus);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
@@ -101,21 +106,22 @@ class TaskRepository extends Repository
         if (!$result) {
             throw new Exception($statement->error);
         }
-        if ($result->num_rows > 0){
+        if ($result->num_rows > 0) {
             $row = $result->fetch_all(MYSQLI_ASSOC);
             return $row;
         }
     }
-    public function getTaskOfNextDay($userID)
+
+    public function getTaskOfNextDay($user_id)
     {
         $wantedStatus = 0;
         $timeAddition = 1;
-        $query = "SELECT  task.id, description, category_id, category.color, dueDate  FROM $this->tableName JOIN category ON task.category_id = category.id WHERE dueDate = DATE_ADD(CAST(CURRENT_TIMESTAMP as date), INTERVAL ? DAY) AND user_id=? AND status =?";
+        $query = "SELECT  task.id , description, category_id, category.color, dueDate  FROM $this->tableName JOIN category ON task.category_id = category.id WHERE dueDate = DATE_ADD(CAST(CURRENT_TIMESTAMP as date), INTERVAL ? DAY) AND user_id=? AND status =?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('iii', $timeAddition,$userID, $wantedStatus);
+        $rc = $statement->bind_param('iii', $timeAddition, $user_id, $wantedStatus);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
@@ -124,59 +130,78 @@ class TaskRepository extends Repository
         if (!$result) {
             throw new Exception($statement->error);
         }
-        if ($result->num_rows > 0){
+        if ($result->num_rows > 0) {
             $row = $result->fetch_all(MYSQLI_ASSOC);
             return $row;
         }
     }
 
-    public function deleteTaskByCategoryID($categoryID){
-        $query = "DELETE FROM $this->tableName WHERE category_id =?";
+    public function deleteTaskByCategoryID($category_id)
+    {
+        $query = "DELETE t FROM $this->tableName t JOIN category c ON c.id = t.category_id WHERE t.category_id =? AND c.user_id =?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('i', $categoryID);
+        $rc = $statement->bind_param('ii', $category_id, $_SESSION['user']->id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
         $statement->execute();
     }
 
-    public function deleteTaskByTaskID($taskID)
+    public function deleteTaskByTaskID($task_id)
     {
-        $query = "DELETE FROM $this->tableName WHERE id =?";
+        $query = "DELETE t FROM $this->tableName t JOIN category c ON c.id = t.category_id WHERE t.id =? AND c.user_id =?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('i', $taskID);
+        $rc = $statement->bind_param('ii', $task_id, $_SESSION['user']->id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
         $statement->execute();
     }
 
-    public function checkIfTaskExists($task_id)
+    public function checkByIdIfTaskExists($task_id)
     {
-        $query = "SELECT  task.id  FROM $this->tableName WHERE task.id=?";
+        $query = "SELECT  task.id FROM $this->tableName JOIN category ON category.id = category_id WHERE task.id=? AND user_id=?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('i', $task_id);
+        $rc = $statement->bind_param('ii', $task_id, $_SESSION['user']->id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
         $statement->execute();
         $result = $statement->get_result();
-        if (!$result) {
-            throw new Exception($statement->error);
-        }
-        if ($result->num_rows > 0){
-            $row = $result->fetch_all(MYSQLI_ASSOC);
-            return $row;
+        if (empty($result->num_rows)) {
+            $_SESSION['warning'] = "Task does not exist";
+            header('Location: /task/?category_id='.$_SESSION['currentCategory']->id);
+            exit();
         }
     }
 
+    public function checkIfTaskExist($description, $date, $category_id)
+    {
+        $wantedStatus = 0;
+        $query = "SELECT task.id FROM $this->tableName JOIN category ON category.id = category_id WHERE category_id =? AND description =? AND dueDate=? AND status = ? AND user_id =? ";
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        if (false === $statement) {
+            throw new Exception(ConnectionHandler::getConnection()->error);
+        }
+        $rc = $statement->bind_param('issii', $category_id, $description, $date, $wantedStatus, $_SESSION['user']->id);
+        if (false === $rc) {
+            throw new Exception($statement->error);
+        }
+        $statement->execute();
+        $result = $statement->get_result();
+        if ($result->num_rows > 0) {
+            $_SESSION['warning'] = "Task already exists";
+            header('Location: /task/?category_id='.$_SESSION['currentCategory']->id);
+            exit();
+        }
+    }
 }

@@ -5,7 +5,7 @@
             <img src="/images/profilePicture.png" class="profileIcon" alt="profileIcon">
             <div class="usernameContainer">
                 <h5 class="leftPositionedText">Username:</h5>
-                <h5 class="leftPositionedText"><?= $_SESSION['user']->username ?></h5>
+                <h5 class="leftPositionedText"><?= htmlentities($_SESSION['user']->username) ?></h5>
             </div>
             <div class="iconInputContainer">
                 <i class="bi bi-envelope"></i>
