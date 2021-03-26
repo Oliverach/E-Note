@@ -42,6 +42,9 @@ Mit Diesen Farben und Schriftart soll ein minimalistischer Eindruck hinterlassen
 ## ERM:
 ![e-note color_palette](README_Images/ERM.png?raw=true)
 
+## Link to Issues:
+[GitLab Issues](https://git.bbcag.ch/inf-bl/zh/2020/applikationsentwicklung/andreas/webentwicklung/e-note/-/issues?scope=all&utf8=%E2%9C%93&state=all "GitHub Issues")
+
 ## Author
 
 Oliver Achermann
