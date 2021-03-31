@@ -40,12 +40,13 @@ Mit Diesen Farben und Schriftart soll ein minimalistischer Eindruck hinterlassen
 
 # Installationsanleitung
 
-## Systemanforderungen
+## Systemanforderungen/Verwendete Technologien
 
 -	Apache Version: 2.4.46
 -	PHP-Version: PHP 8.0.2
 -	HTML Version: HTML 5
 -	CSS-Version: CSS 3
+-   JavaScript-Version: V8 8.9.255.20
 -	Bootstrap Version: Bootstrap 4
 -	Browser Version: Google Chrome (Version 89.0.4389.90)
 -	MySQL-Server-Version: 8.0.19
