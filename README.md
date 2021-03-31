@@ -9,7 +9,7 @@ Diese Website hat ein minimalistisches Design, welches die jüngere Altersgruppe
 
 ## Farbkonzept
 ![e-note ERM](README_Images/color_theme.png?raw=true)
-schriftart: Roboto (https://fonts.google.com/specimen/Roboto?preview.text_type=custom)<br />
+schriftart: Roboto (https://fonts.google.com/specimen/Roboto?preview.text_type=custom)<br>
 Mit Diesen Farben und Schriftart soll ein minimalistischer Eindruck hinterlassen.
 
 ## GUI
@@ -57,7 +57,7 @@ Mit Diesen Farben und Schriftart soll ein minimalistischer Eindruck hinterlassen
 ### Apache Konfiguration
 Im C:\xampp\apache\conf\extra\httpd-vhosts.conf (Default Path) muss folgende Zeile hinzugefügt werden:<br>
 ![e-note vhost](README_Images/vhost.png?raw=true)
-[Link zu den Zeilen](https://git.bbcag.ch/inf-bl/zh/2020/applikationsentwicklung/andreas/webentwicklung/e-note/-/blob/master/Dokumentation/vhost.txt "vhost File")
+[Link zu den Zeilen](https://git.bbcag.ch/inf-bl/zh/2020/applikationsentwicklung/andreas/webentwicklung/e-note/-/blob/master/Dokumentation/vhost.txt "vhost File")<br>
 Bei dieser Konfiguration muss das Projekt Ordner im " C: /xampp/htdocs sein.
 
 ### Windows Konfiguration
