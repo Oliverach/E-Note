@@ -36,7 +36,7 @@ class ValidationHelper
         $lowercase = preg_match('@[a-z]@', $password);
         $number = preg_match('@[0-9]@', $password);
         if (!$uppercase || !$lowercase || !$number || strlen($password) < 8) {
-            $_SESSION['warning'] = "Password should be at least 8 characters in length and should include at least one upper case letter and one number.";
+            $_SESSION['warning'] = "Password should be at least 8 characters in length and should include at least one upper case letter , one lower case letter and one number.";
             return false;
         } else {
             return true;
