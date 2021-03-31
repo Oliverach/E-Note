@@ -6,7 +6,7 @@ use App\Database\ConnectionHandler;
 use Exception;
 
 
-class TaskRepository extends Repository
+class TaskRepository
 {
     protected $tableName = "task";
 
@@ -28,7 +28,7 @@ class TaskRepository extends Repository
 
 
 
-    public function getTaskOfCurrentCategory($currentCategory_id)
+    public function getTaskOfCurrentCategory($currentCategory_id, $user_id)
     {
         $defaultStatus = 0;
         $query = "SELECT task.id task_id, task.*, category.id c_id, category.* FROM $this->tableName JOIN category ON category.id = category_id where category_id =? AND status = ? AND user_id =?";
@@ -36,7 +36,7 @@ class TaskRepository extends Repository
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('iii', $currentCategory_id, $defaultStatus, $_SESSION['user']->id);
+        $rc = $statement->bind_param('iii', $currentCategory_id, $defaultStatus, $user_id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
@@ -51,7 +51,7 @@ class TaskRepository extends Repository
         }
     }
 
-    public function completeTask($task_id)
+    public function completeTask($task_id, $user_id)
     {
         $completedStatus = 1;
         $query = "UPDATE $this->tableName JOIN category ON category.id = category_id SET status =? WHERE task.id=? AND user_id=?";
@@ -59,14 +59,14 @@ class TaskRepository extends Repository
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('iii', $completedStatus, $task_id, $_SESSION['user']->id);
+        $rc = $statement->bind_param('iii', $completedStatus, $task_id, $user_id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
         $statement->execute();
     }
 
-    public function getCompletedTaskOfCurrentCategory($currentCategory_id)
+    public function getCompletedTaskOfCurrentCategory($currentCategory_id, $user_id)
     {
         $wantedStatus = 1;
         $query = "SELECT task.id task_id, task.*, category.id c_id, category.* FROM $this->tableName JOIN category ON category.id = category_id WHERE category_id =? AND status = ? AND user_id =? ";
@@ -74,7 +74,7 @@ class TaskRepository extends Repository
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('iii', $currentCategory_id, $wantedStatus, $_SESSION['user']->id);
+        $rc = $statement->bind_param('iii', $currentCategory_id, $wantedStatus, $user_id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }

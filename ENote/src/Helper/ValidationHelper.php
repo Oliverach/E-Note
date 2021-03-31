@@ -56,10 +56,10 @@ class ValidationHelper
     }
     public static function validateTaskDescription($description){
         if(strlen($description) > 40){
-            $_SESSION['warning'] = "Category Name to long";
+            $_SESSION['warning'] = "Task description to long";
             return false;
         }else if(empty($description)){
-            $_SESSION['warning'] = "Category Name required";
+            $_SESSION['warning'] = "Task description required";
             return false;
         }else{
             return true;

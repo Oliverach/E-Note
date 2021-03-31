@@ -19,6 +19,10 @@ if (isset($_SESSION['userCategory'])) {
                             </div>
                             <?php
                         }
+                    }else{
+                        ?>
+                        <h4 class="centeredText">Nothing due to Today</h4>
+                        <?php
                     }
                     ?>
 
@@ -40,6 +44,10 @@ if (isset($_SESSION['userCategory'])) {
                             </div>
                             <?php
                         }
+                    }else{
+                        ?>
+                        <h4 class="centeredText">Nothing due to Tomorrow</h4>
+                        <?php
                     }
                     ?>
                 </div>
@@ -59,7 +67,7 @@ if (isset($_SESSION['userCategory'])) {
                             <a href="/task/?category_id=<?= $category['category_id'] ?>" class="categoryContainer">
                                 <i class="circle" style="border-color: <?= $category['color']?>; box-shadow:0 0 10px <?= $category["color"]?>"></i>
                                 <h5 title="<?= $name ?>"><?= strlen($name) <= 10 ? $name : substr($name, 0, 10)."..." ?></h5>
-                                <h5><?= $amount ?> on due</h5>
+                                <h5><?= $amount ?> due</h5>
                             </a>
                             <?php
                         }

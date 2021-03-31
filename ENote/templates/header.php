@@ -47,3 +47,18 @@ if (isset($_SESSION['warning'])) {
     unset($_SESSION['warning']);
 }
 ?>
+<?php
+if (isset($_SESSION['success'])) {
+    if (isset($_SESSION['loggedIn'])) {
+        $position = "55%";
+    } else {
+        $position = "50%";
+    }
+    ?>
+    <div class="alert alert-success" style="left:<?= $position ?>" role="alert">
+        <?= $_SESSION['success'] ?>
+    </div>
+    <?php
+    unset($_SESSION['success']);
+}
+?>

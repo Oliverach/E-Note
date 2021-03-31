@@ -3,12 +3,10 @@
 namespace App\Repository;
 
 use App\Database\ConnectionHandler;
-use App\Helper\SessionHelper;
-use App\Helper\ValidationHelper;
 use Exception;
 
 
-class UserRepository extends Repository
+class UserRepository
 {
     protected $tableName = "user";
 
@@ -46,8 +44,6 @@ class UserRepository extends Repository
                 throw new Exception($statement->error);
             }
             $statement->execute();
-            header('Location: /user/login');
-            exit();
         }else if ($this->checkUserAvailability($username)->num_rows != 0){
             $_SESSION['warning'] = "User Already Exists";
             header('Location: /user/create');
@@ -89,6 +85,7 @@ class UserRepository extends Repository
             }
             $statement->execute();
             $_SESSION['user'] = $this->checkUserExistance($_SESSION['user']->username, $_SESSION['user']->password);
+            $_SESSION['success'] = "Personal Info updated successfully";
             header('Location: /user');
             exit();
         }else{
@@ -143,6 +140,7 @@ class UserRepository extends Repository
             }
             $statement->execute();
             $_SESSION['user'] = $this->checkUserExistance($_SESSION['user']->username, $newPW);
+            $_SESSION['success'] = "Password changed successfully";
             header('Location: /user');
             exit();
         } else if($confirmNewPW != $newPW){
@@ -154,6 +152,5 @@ class UserRepository extends Repository
             header('Location: /user/changePassword');
             exit();
         }
-
     }
 }

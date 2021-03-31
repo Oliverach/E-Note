@@ -62,7 +62,7 @@ nav{
   font-size: 30px;
   text-decoration: none;
 }
-.alert-danger{
+.alert-danger, .alert-success{
   text-align: center;
   width: 60%;
   position:absolute;

@@ -17,8 +17,8 @@ class TaskController
             header("Location: /");
             exit();
         }
-        self::checkIfCategoryExists($_GET['category_id']);
-        self::updateSpecificCategoryContent();
+        $this->checkIfCategoryExists($_GET['category_id']);
+        $this->updateSpecificCategoryContent();
         $view = new View('task/task');
         $view->title = 'Task';
         $view->display();
@@ -26,6 +26,10 @@ class TaskController
 
     public function addTask(){
         ValidationHelper::checkIfUserLoggedIn();
+        if (empty($_POST['description']) || empty($_POST['date'])){
+            header('Location: /task/?category_id='.$_SESSION['currentCategory']->id);
+            exit();
+        }
         if(!ValidationHelper::validateTaskDescription($_POST['description'])){
             header('Location: /task/?category_id='.$_SESSION['currentCategory']->id);
             exit();
@@ -50,7 +54,7 @@ class TaskController
         $task_id = (int)$_GET['id'];
         $taskRepository = new TaskRepository();
         $taskRepository->checkByIDIfTaskExists($task_id);
-        $taskRepository->completeTask($task_id);
+        $taskRepository->completeTask($task_id,  $_SESSION['user']->id);
         SessionHelper::updateAllCategoryContent();
         header('Location: /task/?category_id='.$_SESSION['currentCategory']->id);
         exit();
@@ -72,7 +76,7 @@ class TaskController
 
     public function deleteTaskOfCategory(){
         ValidationHelper::checkIfUserLoggedIn();
-        self::checkIfCategoryExists($_SESSION['currentCategory']->id);
+        $this->checkIfCategoryExists($_SESSION['currentCategory']->id);
         $taskRepository = new TaskRepository();
         $taskRepository->deleteTaskByCategoryID($_SESSION['currentCategory']->id);
         header('Location: /task/?category_id='.$_SESSION['currentCategory']->id);
@@ -82,7 +86,7 @@ class TaskController
     public function checkIfCategoryExists($category_id)
     {
         $categoryRepository = new CategoryRepository();
-        $result = $categoryRepository->checkIfCategoryExists($category_id);
+        $result = $categoryRepository->checkIfCategoryExists($category_id , $_SESSION['user']->id);
         if (empty($result->id)){
             $_SESSION['warning'] = "Category not found";
             header("Location: /");
@@ -93,8 +97,10 @@ class TaskController
     public function updateSpecificCategoryContent(){
         $categoryRepository = new CategoryRepository();
         $taskRepository = new TaskRepository();
-        $_SESSION['currentCategory'] = $categoryRepository->getCurrentCategoryByID((int)$_GET['category_id']);
-        $_SESSION['taskOfCurrentCategory'] = $taskRepository->getTaskOfCurrentCategory($_SESSION['currentCategory']->id);
-        $_SESSION['completedTaskOfCurrentCategory'] = $taskRepository->getCompletedTaskOfCurrentCategory($_SESSION['currentCategory']->id);
+        $category_id = (int)$_GET['category_id'];
+        $user_id = $_SESSION['user']->id;
+        $_SESSION['currentCategory'] = $categoryRepository->getCurrentCategoryByID($category_id,$user_id);
+        $_SESSION['taskOfCurrentCategory'] = $taskRepository->getTaskOfCurrentCategory($category_id, $user_id);
+        $_SESSION['completedTaskOfCurrentCategory'] = $taskRepository->getCompletedTaskOfCurrentCategory($category_id, $user_id);
     }
 }

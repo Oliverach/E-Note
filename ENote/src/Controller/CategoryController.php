@@ -30,6 +30,10 @@ class CategoryController
     }
 
     public function doCreate(){
+        if (empty($_POST['name']) || empty($_POST['color'])){
+            header('Location: /category/create');
+            exit();
+        }
         ValidationHelper::checkIfUserLoggedIn();
         if(!ValidationHelper::validateCategoryName($_POST['name'])){
             header('Location: /category/create');
@@ -53,7 +57,7 @@ class CategoryController
             exit();
         }else{
             $categoryRepository = new CategoryRepository();
-            $categoryRepository->deleteCategoryById($_SESSION['currentCategory']->id);
+            $categoryRepository->deleteCategoryById($_SESSION['currentCategory']->id, $_SESSION['user']->id);
             header('Location: /category');
             exit();
         }

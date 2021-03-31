@@ -21,21 +21,17 @@
   <component name="ChangeListManager">
     <list default="true" id="30b9f70c-4e9b-4ac0-8b0f-e40eed737ffb" name="Default Changelist" comment="Validation updated/&#10;GUI updated/">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/config.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CategoryController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/TaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TaskController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Helper/SessionHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Helper/SessionHelper.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Helper/ValidationHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Helper/ValidationHelper.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/CategoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CategoryRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/Repository.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/TaskRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/TaskRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/UserRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/category/allCategory.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/category/allCategory.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/task/task.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/task/task.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/changeProfile.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/changeProfile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/profile.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +74,7 @@
   </component>
   <component name="PhpServers">
     <servers>
-      <server host="my-project.local" id="bf919a1c-ac41-4404-8c4f-a57e1b80c76b" name="my-project.local" />
+      <server host="e-Note" id="bf919a1c-ac41-4404-8c4f-a57e1b80c76b" name="E-Note" />
     </servers>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 8.0">
@@ -117,7 +113,7 @@
     <configuration default="true" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="my-project.local">
       <method v="2" />
     </configuration>
-    <configuration name="config1" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="my-project.local">
+    <configuration name="config1" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="E-Note">
       <method v="2" />
     </configuration>
   </component>
@@ -161,7 +157,9 @@
       <workItem from="1616613303419" duration="3352000" />
       <workItem from="1616657194538" duration="26520000" />
       <workItem from="1616701943302" duration="120000" />
-      <workItem from="1616743617232" duration="25303000" />
+      <workItem from="1616743617232" duration="27375000" />
+      <workItem from="1616774177694" duration="4455000" />
+      <workItem from="1617171187525" duration="2825000" />
     </task>
     <task id="LOCAL-00001" summary="MVC implementiert">
       <created>1615475861892</created>
@@ -219,7 +217,21 @@
       <option name="project" value="LOCAL" />
       <updated>1616688243822</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="htmlentites() added/security upgraded">
+      <created>1616772029078</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1616772029078</updated>
+    </task>
+    <task id="LOCAL-00010" summary="schema.sql adjusted">
+      <created>1616772229430</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1616772229430</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -258,25 +270,17 @@
     <MESSAGE value="User Info editing added/ password changing added/&#10;GUI upgraded" />
     <MESSAGE value="GUI updated/validation updated" />
     <MESSAGE value="Signature Color implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="Signature Color implemented" />
+    <MESSAGE value="htmlentites() added/security upgraded" />
+    <MESSAGE value="schema.sql adjusted" />
+    <option name="LAST_COMMIT_MESSAGE" value="schema.sql adjusted" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/src/Controller/TaskController.php</url>
-          <line>51</line>
-          <option name="timeStamp" value="44" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Repository/TaskRepository.php</url>
           <line>189</line>
           <option name="timeStamp" value="49" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/src/Controller/TaskController.php</url>
-          <line>35</line>
-          <option name="timeStamp" value="50" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Helper/SessionHelper.php</url>

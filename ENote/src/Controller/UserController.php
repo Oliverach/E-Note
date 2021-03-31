@@ -29,15 +29,18 @@ class UserController
 
     public function doCreate()
     {
-        if(!ValidationHelper::validatePasswordFormat($_POST['password'])){
+        if (!ValidationHelper::validatePasswordFormat($_POST['password'])) {
             header('Location: /user/create');
             exit();
-        }else{
+        } else {
+            $userRepository = new UserRepository();
             $username = ConnectionHandler::getConnection()->escape_string($_POST['username']);
             $password = hash('sha256', $_POST['password']);
             $confirm_password = hash('sha256', $_POST['confirm_password']);
-            $userRepository = new UserRepository();
             $userRepository->registerUser($username, $password, $confirm_password);
+            $_SESSION['success'] = "Register successful";
+            header('Location: /user/login');
+            exit();
         }
     }
 
@@ -51,9 +54,9 @@ class UserController
 
     public function doLogin()
     {
+        $userRepository = new UserRepository();
         $username = ConnectionHandler::getConnection()->escape_string($_POST['username']);
         $password = hash('sha256', $_POST['password']);
-        $userRepository = new UserRepository();
         $user = $userRepository->checkUserExistance($username, $password);
         if (isset($user->id)) {
             $_SESSION['loggedIn'] = true;
@@ -79,6 +82,10 @@ class UserController
     public function doUpdateUserInfo()
     {
         ValidationHelper::checkIfUserLoggedIn();
+        if (empty($_POST['email']) || empty($_POST['password'])){
+            header('Location: /user/updateProfile');
+            exit();
+        }
         $email = ConnectionHandler::getConnection()->escape_string($_POST['email']);
         ValidationHelper::isEmail($email);
         $password = hash('sha256', $_POST['password']);
@@ -96,10 +103,14 @@ class UserController
 
     public function doChangePassword()
     {
-        if(!ValidationHelper::validatePasswordFormat($_POST['newPW'])){
+        if (empty($_POST['confirmNewPW']) || empty($_POST['currentPW'] || empty($_POST['newPW']))){
             header('Location: /user/changePassword');
             exit();
-        }else{
+        }
+        if (!ValidationHelper::validatePasswordFormat($_POST['newPW'])) {
+            header('Location: /user/changePassword');
+            exit();
+        } else {
             $newPW = hash('sha256', $_POST['newPW']);
             $confirmNewPW = hash('sha256', $_POST['confirmNewPW']);
             $currentPW = hash('sha256', $_POST['currentPW']);

@@ -6,7 +6,7 @@ use App\Database\ConnectionHandler;
 use Exception;
 
 
-class CategoryRepository extends Repository
+class CategoryRepository
 {
     protected $tableName = "category";
 
@@ -90,14 +90,14 @@ class CategoryRepository extends Repository
         }
     }
 
-    public function getCurrentCategoryByID($category_id){
+    public function getCurrentCategoryByID($category_id, $user_id){
 
         $query = "SELECT id, name, color FROM $this->tableName WHERE id =? AND user_id =?;";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('ii', $category_id, $_SESSION['user']->id);
+        $rc = $statement->bind_param('ii', $category_id, $user_id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
@@ -112,28 +112,28 @@ class CategoryRepository extends Repository
         }
     }
 
-    public function deleteCategoryById($currentCategory_id)
+    public function deleteCategoryById($currentCategory_id, $user_id)
     {
         $query = "DELETE FROM $this->tableName WHERE id=? AND user_id=?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('ii', $currentCategory_id, $_SESSION['user']->id);
+        $rc = $statement->bind_param('ii', $currentCategory_id, $user_id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
         $statement->execute();
     }
 
-    public function checkIfCategoryExists($category_id)
+    public function checkIfCategoryExists($category_id , $user_id)
     {
         $query = "SELECT id FROM $this->tableName WHERE id =? AND user_id =?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('ii', $category_id, $_SESSION['user']->id);
+        $rc = $statement->bind_param('ii', $category_id, $user_id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
