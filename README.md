@@ -62,7 +62,7 @@ Im C:\Windows\System32\drivers\etc\hosts (Default Path) muss folgende Zeile hinz
 127.0.0.1	e-Note
 ### PHP Konfiguration
 1. PHP Web Page als Konfiguration hinzufügen
-2. Bei Server Host «e-Note eingeben»
+2. Bei Server Host «e-Note» eingeben
 
 ### Datenbank Setup
 Schema.sql in MySQL Workbench ausführen.
