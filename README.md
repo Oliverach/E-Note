@@ -53,11 +53,12 @@ Mit Diesen Farben und Schriftart soll ein minimalistischer Eindruck hinterlassen
 ## Installation
 
 ### Apache Konfiguration
-Im C:\xampp\apache\conf\extra\httpd-vhosts.conf (Default Path) muss folgende Zeile hinzugefügt werden:
+Im C:\xampp\apache\conf\extra\httpd-vhosts.conf (Default Path) muss folgende Zeile hinzugefügt werden:<br>
 ![e-note vhost](README_Images/vhost.png?raw=true)
-Im C:\Windows\System32\drivers\etc\hosts (Default Path) muss folgende Zeile hinzugefügt werden:
-![e-note host](README_Images/host.png?raw=true)
 
+### Windows Konfiguration
+Im C:\Windows\System32\drivers\etc\hosts (Default Path) muss folgende Zeile hinzugefügt werden:<br>
+127.0.0.1	e-Note
 ### PHP Konfiguration
 1. PHP Web Page als Konfiguration hinzufügen
 2. Bei Server Host «e-Note eingeben»
