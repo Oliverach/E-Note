@@ -101,10 +101,10 @@ Im C:\Windows\System32\drivers\etc\hosts (Default Path) muss folgende Zeile hinz
 [schema.sql](https://git.bbcag.ch/inf-bl/zh/2020/applikationsentwicklung/andreas/webentwicklung/e-note/-/blob/master/ENote/data/schema.sql "Schema") in MySQL Workbench ausführen.
 
 # Benutzerhandbuch
-Der Benutzer wird als erstens zur Login Seite geleitet. Nachdem Registrieren und Login wird der Benutzer zur Startseite seines Accounts weitergeleitet. Auf dem Navbar ist das Logo und Home Button zusehen. Sie führen beide zur Starseite. Ausserdem noch das User-Icon, dass ein Dropdown-Menu anzeigt, wenn man mit dem Cursor darüber hovered. Im Dropdown-Menu kann man Benuzereinstellung auswählen oder sich abmelden. Auf dem Side-Navigation sind zwei default Menupunkte, nämlich «Add Category» und «All Category». Unter «Add Category» kann man eingene Kategorien erstellen. «All Category» ist die Startseite aller Benutzer, dort werden alle Kategorien der Benutzer angezeigt. Zusätzlich sieht man auch welche Tasks auf den aktuellen oder nächsten Tag fällig ist.
+Der Benutzer wird als erstens zur Login Seite geleitet. Nachdem Registrieren und Login wird der Benutzer zur Startseite seines Accounts weitergeleitet. Auf dem Navbar ist das Logo und Home Button zusehen. Sie führen beide zur Starseite. Ausserdem noch das User-Icon, dass ein Dropdown-Menu anzeigt, wenn man mit dem Cursor darüber hovered. Im Dropdown-Menu kann man Benuzereinstellung auswählen oder sich abmelden. Auf dem Side-Navigation sind zwei default Menupunkte, nämlich «New Category» und «All Category». Unter «New Category» kann man eingene Kategorien erstellen. «All Category» ist die Startseite aller Benutzer, dort werden alle Kategorien der Benutzer angezeigt. Zusätzlich sieht man auch welche Tasks auf den aktuellen oder nächsten Tag fällig ist.
 ## CRUD
 - Der Benutzer kann ein Accout unter Sign-In site erstellen. User Informationen werden in Einstellungen ersichtlich sein, dort kann man ebenfalls Password oder E-Mail ändern.
-- Der Benutzer kann eigene Kategorien unter «Add Category» erstellen und löschen kann man sie unter die Kategorie selbst.
+- Der Benutzer kann eigene Kategorien unter «New Category» erstellen und löschen kann man sie unter die Kategorie selbst.
 - Der Benutzer kann Tasks unter Kategorien erstellen und anschauen. Wenn man sie in der Task-Sektion anklickt, kann man sie erledigen(update). Wenn man sie in der completed-Sektion anklickt, kann man sie endgültig löschen(delete).
  
 # Fazit 
