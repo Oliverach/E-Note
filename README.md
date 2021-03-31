@@ -58,10 +58,12 @@ Mit Diesen Farben und Schriftart soll ein minimalistischer Eindruck hinterlassen
 Im C:\xampp\apache\conf\extra\httpd-vhosts.conf (Default Path) muss folgende Zeile hinzugefügt werden:<br>
 ![e-note vhost](README_Images/vhost.png?raw=true)
 [Link zu den Zeilen](https://git.bbcag.ch/inf-bl/zh/2020/applikationsentwicklung/andreas/webentwicklung/e-note/-/blob/master/Dokumentation/vhost.txt "vhost File")
+Bei dieser Konfiguration muss das Projekt Ordner im " C: /xampp/htdocs sein.
 
 ### Windows Konfiguration
 Im C:\Windows\System32\drivers\etc\hosts (Default Path) muss folgende Zeile hinzugefügt werden:<br>
 127.0.0.1	e-Note
+
 ### PHP Konfiguration
 1. PHP Web Page als Konfiguration hinzufügen
 2. Bei Server Host «e-Note» eingeben
