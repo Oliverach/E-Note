@@ -82,7 +82,7 @@ class UserController
     public function doUpdateUserInfo()
     {
         ValidationHelper::checkIfUserLoggedIn();
-        if (empty($_POST['email']) || empty($_POST['password'])){
+        if (empty($_POST['email']) || empty($_POST['password'])) {
             header('Location: /user/updateProfile');
             exit();
         }
@@ -103,7 +103,7 @@ class UserController
 
     public function doChangePassword()
     {
-        if (empty($_POST['confirmNewPW']) || empty($_POST['currentPW'] || empty($_POST['newPW']))){
+        if (empty($_POST['confirmNewPW']) || empty($_POST['currentPW'] || empty($_POST['newPW']))) {
             header('Location: /user/changePassword');
             exit();
         }

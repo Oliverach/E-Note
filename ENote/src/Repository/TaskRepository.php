@@ -26,8 +26,6 @@ class TaskRepository
         $statement->execute();
     }
 
-
-
     public function getTaskOfCurrentCategory($currentCategory_id, $user_id)
     {
         $defaultStatus = 0;
@@ -179,7 +177,7 @@ class TaskRepository
         $result = $statement->get_result();
         if (empty($result->num_rows)) {
             $_SESSION['warning'] = "Task does not exist";
-            header('Location: /task/?category_id='.$_SESSION['currentCategory']->id);
+            header('Location: /task/?category_id=' . $_SESSION['currentCategory']->id);
             exit();
         }
     }
@@ -200,7 +198,7 @@ class TaskRepository
         $result = $statement->get_result();
         if ($result->num_rows > 0) {
             $_SESSION['warning'] = "Task already exists";
-            header('Location: /task/?category_id='.$_SESSION['currentCategory']->id);
+            header('Location: /task/?category_id=' . $_SESSION['currentCategory']->id);
             exit();
         }
     }

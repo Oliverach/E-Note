@@ -12,14 +12,16 @@ if (isset($_SESSION['userCategory'])) {
                             $description = htmlentities($task['description']);
                             $dueDate = htmlentities($task['dueDate']);
                             ?>
-                            <div class="taskContainer" onclick="confirmCompleteTask('/task/complete?id=<?= $task['id'] ?>')">
-                                <i class="circle" style="border-color: <?= $task['color'] ?>; box-shadow:0 0 10px <?= $task['color'] ?> ;"></i>
-                                <h5 title="<?= $description ?>"><?= strlen($description) <= 30 ? $description : substr($description, 0, 30)."..." ?></h5>
+                            <div class="taskContainer"
+                                 onclick="confirmCompleteTask('/task/complete?id=<?= $task['id'] ?>')">
+                                <i class="circle"
+                                   style="border-color: <?= $task['color'] ?>; box-shadow:0 0 10px <?= $task['color'] ?> ;"></i>
+                                <h5 title="<?= $description ?>"><?= strlen($description) <= 50 ? $description : substr($description, 0, 50) . "..." ?></h5>
                                 <h5><?= $dueDate ?></h5>
                             </div>
                             <?php
                         }
-                    }else{
+                    } else {
                         ?>
                         <h4 class="centeredText">Nothing due to Today</h4>
                         <?php
@@ -37,14 +39,16 @@ if (isset($_SESSION['userCategory'])) {
                             $description = htmlentities($task['description']);
                             $dueDate = htmlentities($task['dueDate']);
                             ?>
-                            <div onclick="confirmCompleteTask('/task/complete?id=<?= $task['id'] ?>')" class="taskContainer">
-                                <i class="circle" style="border-color: <?= $task['color'] ?>; box-shadow:0 0 10px <?= $task['color'] ?> ;"></i>
-                                <h5 title="<?= $description ?>"><?= strlen($description) <= 30 ? $description : substr($description, 0, 30)."..." ?></h5>
+                            <div onclick="confirmCompleteTask('/task/complete?id=<?= $task['id'] ?>')"
+                                 class="taskContainer">
+                                <i class="circle"
+                                   style="border-color: <?= $task['color'] ?>; box-shadow:0 0 10px <?= $task['color'] ?> ;"></i>
+                                <h5 title="<?= $description ?>"><?= strlen($description) <= 50 ? $description : substr($description, 0, 50) . "..." ?></h5>
                                 <h5><?= $dueDate ?></h5>
                             </div>
                             <?php
                         }
-                    }else{
+                    } else {
                         ?>
                         <h4 class="centeredText">Nothing due to Tomorrow</h4>
                         <?php
@@ -65,8 +69,9 @@ if (isset($_SESSION['userCategory'])) {
                             $amount = htmlentities($category['amount']);
                             ?>
                             <a href="/task/?category_id=<?= $category['category_id'] ?>" class="categoryContainer">
-                                <i class="circle" style="border-color: <?= $category['color']?>; box-shadow:0 0 10px <?= $category["color"]?>"></i>
-                                <h5 title="<?= $name ?>"><?= strlen($name) <= 10 ? $name : substr($name, 0, 10)."..." ?></h5>
+                                <i class="circle"
+                                   style="border-color: <?= $category['color'] ?>; box-shadow:0 0 10px <?= $category["color"] ?>"></i>
+                                <h5 title="<?= $name ?>"><?= strlen($name) <= 10 ? $name : substr($name, 0, 10) . "..." ?></h5>
                                 <h5><?= $amount ?> due</h5>
                             </a>
                             <?php

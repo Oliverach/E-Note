@@ -10,7 +10,7 @@ use App\View\View;
 
 class CategoryController
 {
-    public function  index()
+    public function index()
     {
         ValidationHelper::checkIfUserLoggedIn();
         SessionHelper::updateAllCategoryContent();
@@ -20,7 +20,7 @@ class CategoryController
         $view->display();
     }
 
-    public function  create()
+    public function create()
     {
         ValidationHelper::checkIfUserLoggedIn();
         $view = new View('category/addCategory');
@@ -29,33 +29,35 @@ class CategoryController
         $view->display();
     }
 
-    public function doCreate(){
-        if (empty($_POST['name']) || empty($_POST['color'])){
+    public function doCreate()
+    {
+        if (empty($_POST['name']) || empty($_POST['color'])) {
             header('Location: /category/create');
             exit();
         }
         ValidationHelper::checkIfUserLoggedIn();
-        if(!ValidationHelper::validateCategoryName($_POST['name'])){
+        if (!ValidationHelper::validateCategoryName($_POST['name'])) {
             header('Location: /category/create');
             exit();
-        }else{
+        } else {
             $name = ConnectionHandler::getConnection()->escape_string($_POST['name']);
             $userID = $_SESSION["user"]->id;
             $color = ConnectionHandler::getConnection()->escape_string($_POST['color']);
             $categoryRepository = new CategoryRepository();
-            $categoryRepository->addCategory($name,$userID,$color);
+            $categoryRepository->addCategory($name, $userID, $color);
             SessionHelper::updateAllCategoryContent();
             header("Location: /category ");
             exit();
         }
     }
 
-    public function deleteCategory(){
+    public function deleteCategory()
+    {
         ValidationHelper::checkIfUserLoggedIn();
-        if (empty($_SESSION['currentCategory'])){
+        if (empty($_SESSION['currentCategory'])) {
             header("Location: /category ");
             exit();
-        }else{
+        } else {
             $categoryRepository = new CategoryRepository();
             $categoryRepository->deleteCategoryById($_SESSION['currentCategory']->id, $_SESSION['user']->id);
             header('Location: /category');

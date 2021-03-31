@@ -42,21 +42,23 @@
             <?php
             if (isset($_SESSION['userCategory'])) {
                 foreach ($_SESSION['userCategory'] as $category) {
-                    if (empty($_SESSION['currentCategory']) || $_SESSION['currentCategory']->id != $category['id']){
+                    $name = htmlentities($category['name']);
+                    if (empty($_SESSION['currentCategory']) || $_SESSION['currentCategory']->id != $category['id']) {
                         $active = "";
-                    }else if ($_SESSION['currentCategory']->id == $category['id']){
+                    } else if ($_SESSION['currentCategory']->id == $category['id']) {
                         $active = "active";
                     }
-                        ?>
-                        <a href="/task/?category_id=<?= $category['id'] ?>"
-                           class="sidenavElement <?= $active ?>">
-                            <i class="circle" style="border-color: <?= $category['color'] ?>; box-shadow:0 0 10px <?= $category['color'] ?> ;"></i>
-                            <h4 title="<?= $category['name'] ?>"><?= strlen($category['name']) <= 15 ? $category['name'] : substr($category['name'], 0, 15)."..." ?></h4>
-                        </a>
-                        <?php
+                    ?>
+                    <a href="/task/?category_id=<?= $category['id'] ?>"
+                       class="sidenavElement <?= $active ?>">
+                        <i class="circle"
+                           style="border-color: <?= $category['color'] ?>; box-shadow:0 0 10px <?= $category['color'] ?> ;"></i>
+                        <h4 title="<?= $name ?>"><?= strlen($name) <= 15 ? $category['name'] : substr($name, 0, 15) . "..." ?></h4>
+                    </a>
+                    <?php
 
-                    }
                 }
+            }
 
             ?>
         </div>
