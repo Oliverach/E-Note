@@ -50,6 +50,7 @@ Mit Diesen Farben und Schriftart soll ein minimalistischer Eindruck hinterlassen
 -	Bootstrap Version: Bootstrap 4
 -	Browser Version: Google Chrome (Version 89.0.4389.90)
 -	MySQL-Server-Version: 8.0.19
+-   Composer-Version: 2.0.11
 
 ## Installation
 
