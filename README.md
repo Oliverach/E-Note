@@ -67,12 +67,12 @@ Im C:\Windows\System32\drivers\etc\hosts (Default Path) muss folgende Zeile hinz
 ### Datenbank Setup
 Schema.sql in MySQL Workbench ausführen.
 
-#Benutzerhandbuch
+# Benutzerhandbuch
 Der Benutzer wird als erstens zur Login Seite geleitet. Nachdem Registrieren und Login wird der Benutzer zur Startseite seines Accounts weitergeleitet. Auf dem Navbar ist das Logo und Home Button zusehen. Sie führen beide zur Starseite. Ausserdem noch das User-Icon, dass ein Dropdown-Menu ist. Im Dropdown-Menu kann man Benuzereinstellung auswählen oder sich abmelden.  Auf dem Side-Navigation sind zwei default Menupunkte, nämlich «Add Category» und «All Category». Unter «Add Category» kann man einge Kategorien erstellen. «All Category» ist die Startseite aller Benutzer, es werden dort alle Kategorien angezeigt sowie auf den aktuellen und nächsten Tag fällige Tasks. 
-
-Der Benutzer kann ein Accout erstellen unter Sign-In site erstellen. User Informationen werden in Einstellungen ersichtlich sein, dort kann man ebenfalls Password oder E-Mail ändern.
-Der Benutzer kann eigene Kategorien unter «Add Category erstellen» und löschen kann man sie unter die Kategorie selbst.
-Der Benutzer kann Tasks unter Kategorien erstellen und anschauen. Wenn man sie in der Task-Sektion anklickt, kann man sie erledigen(update). Wenn man sie in der completed-Sektion anklickt, kann man sie endgültig löschen(delete).
+## CRUD
+- Der Benutzer kann ein Accout erstellen unter Sign-In site erstellen. User Informationen werden in Einstellungen ersichtlich sein, dort kann man ebenfalls Password oder E-Mail ändern.
+- Der Benutzer kann eigene Kategorien unter «Add Category erstellen» und löschen kann man sie unter die Kategorie selbst.
+- Der Benutzer kann Tasks unter Kategorien erstellen und anschauen. Wenn man sie in der Task-Sektion anklickt, kann man sie erledigen(update). Wenn man sie in der completed-Sektion anklickt, kann man sie endgültig löschen(delete).
  
 # Fazit 
 Mit dem Endergebnis bin ich sehr zufrieden. Für die Planung habe ich genug Zeit genommen, sodass ich bei der Umsetzung nicht viel daran ändern musste, das hat sich definitiv gelohnt. Ich konnte mein Design zu 95% umsetzen und nötige Änderungen gemacht. Das was entstanden ist, entspricht meine Vorstellung. Ganz am Anfang war der Umgang mit MVC eine Schwierigkeit. Es dauerte etwas Zeit, bis ich es im Griff hatte. Danach bin ich aber schnell vorwärtsgekommen. PHP war einfach zu anwenden, den es von der Syntax her viel nach JAVA ähnelt. Für mich war es besonders interessant, mit der Security Seite einer Website zu beschäftigen. Ich konnte vieles lernen, beispielsweise wie man eine Website gegen SQL-Injections oder Cross-Site Scripting schützt. Viele Validierung brauchte meine Website auch, den der User per URL vieles machen konnte, was er nicht können sollte (z.B Random Value als Query-String mitgeben). Beim Programmieren der Validierung wurde meine Website temporär zerstört, was eine mühsame Sache war. Nebstdem lief alles gut beim Projekt. Alle Muss-Ziele konnte ich umgesetzt, die 2 Kann-Ziele konnte ich wegen der 
