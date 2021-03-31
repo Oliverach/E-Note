@@ -10,28 +10,28 @@ class CategoryRepository
 {
     protected $tableName = "category";
 
-    public function addCategory( $name, $user_id, $color)
+    public function addCategory($name, $user_id, $color)
     {
-        $this->checkCategoryAvailability($name, $user_id);
         $query = "INSERT INTO $this->tableName(name, user_id, color) VALUES (?,?,?) ";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('sis', $name,$user_id,$color);
+        $rc = $statement->bind_param('sis', $name, $user_id, $color);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
         $statement->execute();
     }
 
-    public function checkCategoryAvailability($categoryName,$user_id){
+    public function checkCategoryAvailability($categoryName, $user_id)
+    {
         $query = "SELECT name FROM $this->tableName where name =? AND user_id =?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
         }
-        $rc = $statement->bind_param('si', $categoryName,$user_id);
+        $rc = $statement->bind_param('si', $categoryName, $user_id);
         if (false === $rc) {
             throw new Exception($statement->error);
         }
@@ -40,14 +40,15 @@ class CategoryRepository
         if (!$result) {
             throw new Exception($statement->error);
         }
-        if ($result->num_rows > 0){
-            $_SESSION['warning'] = "Category already exists";
-            header('Location: /category/create');
-            exit();
+        if ($result->num_rows > 0) {
+            return false;
+        } else {
+            return true;
         }
     }
 
-    public function getCategoriesByUserID($user_id){
+    public function getCategoriesByUserID($user_id)
+    {
         $query = "SELECT name, color, id FROM $this->tableName where user_id =?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
@@ -62,13 +63,14 @@ class CategoryRepository
         if (!$result) {
             throw new Exception($statement->error);
         }
-        if ($result->num_rows > 0){
+        if ($result->num_rows > 0) {
             $row = $result->fetch_all(MYSQLI_ASSOC);
             return $row;
         }
     }
 
-    public function getTaskAmountByCategory($user_id){
+    public function getTaskAmountByCategory($user_id)
+    {
         $wantedStatus = 0;
         $query = "SELECT  category.name,category.color,category.id as category_id, COUNT(task.id) as amount FROM $this->tableName LEFT JOIN task ON category.id = task.category_id AND task.status = ? WHERE category.user_id = ? GROUP BY category.name";
         $statement = ConnectionHandler::getConnection()->prepare($query);
@@ -84,13 +86,14 @@ class CategoryRepository
         if (!$result) {
             throw new Exception($statement->error);
         }
-        if ($result->num_rows > 0){
+        if ($result->num_rows > 0) {
             $row = $result->fetch_all(MYSQLI_ASSOC);
             return $row;
         }
     }
 
-    public function getCurrentCategoryByID($category_id, $user_id){
+    public function getCurrentCategoryByID($category_id, $user_id)
+    {
 
         $query = "SELECT id, name, color FROM $this->tableName WHERE id =? AND user_id =?;";
         $statement = ConnectionHandler::getConnection()->prepare($query);
@@ -106,7 +109,7 @@ class CategoryRepository
         if (!$result) {
             throw new Exception($statement->error);
         }
-        if ($result->num_rows > 0){
+        if ($result->num_rows > 0) {
             $row = $result->fetch_object();
             return $row;
         }
@@ -126,7 +129,7 @@ class CategoryRepository
         $statement->execute();
     }
 
-    public function checkIfCategoryExists($category_id , $user_id)
+    public function checkIfCategoryExists($category_id, $user_id)
     {
         $query = "SELECT id FROM $this->tableName WHERE id =? AND user_id =?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
@@ -142,7 +145,7 @@ class CategoryRepository
         if (!$result) {
             throw new Exception($statement->error);
         }
-        if ($result->num_rows > 0){
+        if ($result->num_rows > 0) {
             $row = $result->fetch_object();
             return $row;
         }

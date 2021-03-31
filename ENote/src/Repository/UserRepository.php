@@ -32,27 +32,16 @@ class UserRepository
 
     public function registerUser($username, $password, $confirm_password)
     {
-        $result = $this->checkUserAvailability($username);
-        if ($password == $confirm_password && $result->num_rows == 0) {
-            $query = "INSERT INTO $this->tableName(username, password) VALUES (?,?)";
-            $statement = ConnectionHandler::getConnection()->prepare($query);
-            if (false === $statement) {
-                throw new Exception(ConnectionHandler::getConnection()->error);
-            }
-            $rc = $statement->bind_param('ss', $username, $password);
-            if (false === $rc) {
-                throw new Exception($statement->error);
-            }
-            $statement->execute();
-        } else if ($this->checkUserAvailability($username)->num_rows != 0) {
-            $_SESSION['warning'] = "User Already Exists";
-            header('Location: /user/create');
-            exit();
-        } else {
-            $_SESSION['warning'] = "Passwords do no match";
-            header('Location: /user/create');
-            exit();
+        $query = "INSERT INTO $this->tableName(username, password) VALUES (?,?)";
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        if (false === $statement) {
+            throw new Exception(ConnectionHandler::getConnection()->error);
         }
+        $rc = $statement->bind_param('ss', $username, $password);
+        if (false === $rc) {
+            throw new Exception($statement->error);
+        }
+        $statement->execute();
     }
 
     public function checkUserAvailability($username)
@@ -70,31 +59,18 @@ class UserRepository
         return $result = $statement->get_result();
     }
 
-    public function updateUserInfo($email, $password)
+    public function updateUserInfo($email)
     {
-        $user = $this->checkUserExistance($_SESSION['user']->username, $password);
-        $emailAvailability = $this->checkEMailAvailability($email);
-        if ($user && $emailAvailability) {
-            $query = "UPDATE $this->tableName SET email =? WHERE username=?";
-
-            $statement = ConnectionHandler::getConnection()->prepare($query);
-            if (false === $statement) {
-                throw new Exception(ConnectionHandler::getConnection()->error);
-            }
-            $rc = $statement->bind_param('ss', $email, $_SESSION['user']->username);
-            if (false === $rc) {
-                throw new Exception($statement->error);
-            }
-            $statement->execute();
-            $_SESSION['user'] = $this->checkUserExistance($_SESSION['user']->username, $_SESSION['user']->password);
-            $_SESSION['success'] = "Personal Info updated successfully";
-            header('Location: /user');
-            exit();
-        } else {
-            $_SESSION['warning'] = "Password Incorrect";
-            header('Location: /user/updateUserInfo');
-            exit();
+        $query = "UPDATE $this->tableName SET email =? WHERE username=?";
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        if (false === $statement) {
+            throw new Exception(ConnectionHandler::getConnection()->error);
         }
+        $rc = $statement->bind_param('ss', $email, $_SESSION['user']->username);
+        if (false === $rc) {
+            throw new Exception($statement->error);
+        }
+        $statement->execute();
     }
 
     public function checkEMailAvailability($email)
@@ -114,46 +90,26 @@ class UserRepository
             throw new Exception($statement->error);
         }
         if ($result->num_rows > 0) {
-            $_SESSION['warning'] = "E-Mail unavailable";
-            header('Location: /user/updateUserInfo');
-            exit();
+            return false;
         } else {
             return true;
         }
     }
 
-    public function changeUserPassword($newPW, $confirmNewPW, $currentPW)
+    public function changeUserPassword($newPW)
     {
-        if ($newPW == $currentPW) {
-            $_SESSION['warning'] = "Can not change to same password";
-            header('Location: /user/changePassword');
-            exit();
-        }
-        $user = $this->checkUserExistance($_SESSION['user']->username, $currentPW);
-        if ($user && $confirmNewPW == $newPW) {
-            $query = "UPDATE $this->tableName SET password =? WHERE username=?";
 
-            $statement = ConnectionHandler::getConnection()->prepare($query);
-            if (false === $statement) {
-                throw new Exception(ConnectionHandler::getConnection()->error);
-            }
-            $rc = $statement->bind_param('ss', $newPW, $_SESSION['user']->username);
-            if (false === $rc) {
-                throw new Exception($statement->error);
-            }
-            $statement->execute();
-            $_SESSION['user'] = $this->checkUserExistance($_SESSION['user']->username, $newPW);
-            $_SESSION['success'] = "Password changed successfully";
-            header('Location: /user');
-            exit();
-        } else if ($confirmNewPW != $newPW) {
-            $_SESSION['warning'] = "Passwords do not match";
-            header('Location: /user/changePassword');
-            exit();
-        } else {
-            $_SESSION['warning'] = "Password Incorrect";
-            header('Location: /user/changePassword');
-            exit();
+        $query = "UPDATE $this->tableName SET password =? WHERE username=?";
+
+        $statement = ConnectionHandler::getConnection()->prepare($query);
+        if (false === $statement) {
+            throw new Exception(ConnectionHandler::getConnection()->error);
         }
+        $rc = $statement->bind_param('ss', $newPW, $_SESSION['user']->username);
+        if (false === $rc) {
+            throw new Exception($statement->error);
+        }
+        $statement->execute();
+
     }
 }

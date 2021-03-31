@@ -5,7 +5,7 @@ namespace App\Helper;
 
 class ValidationHelper
 {
-    public static function checkIfUserLoggedIn()
+    public static function redirectIfNotLoggedIn()
     {
         if (!isset($_SESSION['loggedIn'])) {
             header('Location: /user/login');

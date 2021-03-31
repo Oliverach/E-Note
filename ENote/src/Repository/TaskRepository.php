@@ -12,6 +12,7 @@ class TaskRepository
 
     public function addTask($description, $date, $category_id)
     {
+
         $defaultStatus = 0;
         $query = "INSERT INTO $this->tableName (description, dueDate, status, category_id)VALUES (?,?,?,?)";
         $connection = ConnectionHandler::getConnection();
@@ -29,7 +30,7 @@ class TaskRepository
     public function getTaskOfCurrentCategory($currentCategory_id, $user_id)
     {
         $defaultStatus = 0;
-        $query = "SELECT task.id task_id, task.*, category.id c_id, category.* FROM $this->tableName JOIN category ON category.id = category_id where category_id =? AND status = ? AND user_id =?";
+        $query = "SELECT task.id task_id, task.*, category.id c_id, category.* FROM {$this->tableName} JOIN category ON category.id = category_id where category_id =? AND status = ? AND user_id =?";
         $statement = ConnectionHandler::getConnection()->prepare($query);
         if (false === $statement) {
             throw new Exception(ConnectionHandler::getConnection()->error);
@@ -176,9 +177,9 @@ class TaskRepository
         $statement->execute();
         $result = $statement->get_result();
         if (empty($result->num_rows)) {
-            $_SESSION['warning'] = "Task does not exist";
-            header('Location: /task/?category_id=' . $_SESSION['currentCategory']->id);
-            exit();
+            return false;
+        }else{
+            return true;
         }
     }
 
@@ -197,9 +198,9 @@ class TaskRepository
         $statement->execute();
         $result = $statement->get_result();
         if ($result->num_rows > 0) {
-            $_SESSION['warning'] = "Task already exists";
-            header('Location: /task/?category_id=' . $_SESSION['currentCategory']->id);
-            exit();
+            return false;
+        }else{
+            return true;
         }
     }
 }

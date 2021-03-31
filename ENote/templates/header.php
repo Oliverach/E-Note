@@ -33,12 +33,13 @@
     </nav>
 </header>
 <?php
+if (isset($_SESSION['loggedIn'])) {
+    $position = "55%";
+} else {
+    $position = "50%";
+}
 if (isset($_SESSION['warning'])) {
-    if (isset($_SESSION['loggedIn'])) {
-        $position = "55%";
-    } else {
-        $position = "50%";
-    }
+
     ?>
     <div class="alert alert-danger" style="left:<?= $position ?>" role="alert">
         <?= $_SESSION['warning'] ?>
@@ -49,11 +50,6 @@ if (isset($_SESSION['warning'])) {
 ?>
 <?php
 if (isset($_SESSION['success'])) {
-    if (isset($_SESSION['loggedIn'])) {
-        $position = "55%";
-    } else {
-        $position = "50%";
-    }
     ?>
     <div class="alert alert-success" style="left:<?= $position ?>" role="alert">
         <?= $_SESSION['success'] ?>

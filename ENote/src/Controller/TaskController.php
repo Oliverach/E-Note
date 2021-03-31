@@ -13,7 +13,7 @@ class TaskController
 {
     public function index()
     {
-        ValidationHelper::checkIfUserLoggedIn();
+        ValidationHelper::redirectIfNotLoggedIn();
         if (!isset($_GET['category_id']) || !is_numeric($_GET['category_id'])) {
             header("Location: /");
             exit();
@@ -27,65 +27,66 @@ class TaskController
 
     public function addTask()
     {
-        ValidationHelper::checkIfUserLoggedIn();
-        if (empty($_POST['description']) || empty($_POST['date'])) {
-            header('Location: /task/?category_id=' . $_SESSION['currentCategory']->id);
-            exit();
-        }
-        if (!ValidationHelper::validateTaskDescription($_POST['description'])) {
-            header('Location: /task/?category_id=' . $_SESSION['currentCategory']->id);
-            exit();
+        ValidationHelper::redirectIfNotLoggedIn();
+        if (empty($_POST['description']) || empty($_POST['date']) || !ValidationHelper::validateTaskDescription($_POST['description'])) {
+            $this->redirectToCurrentCategory();
         } else {
             $taskRepository = new TaskRepository();
             $description = ConnectionHandler::getConnection()->escape_string($_POST['description']);
             $date = $_POST['date'];
-            $taskRepository->checkIfTaskExist($description, $date, $_SESSION['currentCategory']->id);
+            $result = $taskRepository->checkIfTaskExist($description, $date, $_SESSION['currentCategory']->id);
+            if(!$result){
+                $_SESSION['warning'] = "Task already exists";
+                $this->redirectToCurrentCategory();
+            }
             $taskRepository->addTask($description, $date, $_SESSION['currentCategory']->id);
             SessionHelper::updateAllCategoryContent();
-            header('Location: /task/?category_id=' . $_SESSION['currentCategory']->id);
-            exit();
+            $this->redirectToCurrentCategory();
         }
     }
 
     public function complete()
     {
-        ValidationHelper::checkIfUserLoggedIn();
+        ValidationHelper::redirectIfNotLoggedIn();
         if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-            header('Location: /task/?category_id=' . $_SESSION['currentCategory']->id);
-            exit();
+            $this->redirectToCurrentCategory();
         }
         $task_id = (int)$_GET['id'];
         $taskRepository = new TaskRepository();
-        $taskRepository->checkByIDIfTaskExists($task_id);
+        $result = $taskRepository->checkByIDIfTaskExists($task_id);
+        if (!$result){
+            $_SESSION['warning'] = "Task does not exist";
+            $this->redirectToCurrentCategory();
+        }
         $taskRepository->completeTask($task_id, $_SESSION['user']->id);
         SessionHelper::updateAllCategoryContent();
-        header('Location: /task/?category_id=' . $_SESSION['currentCategory']->id);
-        exit();
+        $this->redirectToCurrentCategory();
     }
 
     public function delete()
     {
-        ValidationHelper::checkIfUserLoggedIn();
+        ValidationHelper::redirectIfNotLoggedIn();
         if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-            header('Location: /task/?category_id=' . $_SESSION['currentCategory']->id);
-            exit();
+            $this->redirectToCurrentCategory();
         }
         $task_id = (int)$_GET['id'];
         $taskRepository = new TaskRepository();
-        $taskRepository->checkByIDIfTaskExists($task_id);
+        $result = $taskRepository->checkByIDIfTaskExists($task_id);
+        if(!$result){
+            $_SESSION['warning'] = "Task does not exist";
+            $this->redirectToCurrentCategory();
+        }
         $taskRepository->deleteTaskByTaskID($task_id);
-        header('Location: /task/?category_id=' . $_SESSION['currentCategory']->id);
-        exit();
+        $this->redirectToCurrentCategory();
     }
 
     public function deleteTaskOfCategory()
     {
-        ValidationHelper::checkIfUserLoggedIn();
+        ValidationHelper::redirectIfNotLoggedIn();
         $this->checkIfCategoryExists($_SESSION['currentCategory']->id);
         $taskRepository = new TaskRepository();
         $taskRepository->deleteTaskByCategoryID($_SESSION['currentCategory']->id);
-        header('Location: /task/?category_id=' . $_SESSION['currentCategory']->id);
-        exit();
+        $this->redirectToCurrentCategory();
     }
 
     public function checkIfCategoryExists($category_id)
@@ -108,5 +109,11 @@ class TaskController
         $_SESSION['currentCategory'] = $categoryRepository->getCurrentCategoryByID($category_id, $user_id);
         $_SESSION['taskOfCurrentCategory'] = $taskRepository->getTaskOfCurrentCategory($category_id, $user_id);
         $_SESSION['completedTaskOfCurrentCategory'] = $taskRepository->getCompletedTaskOfCurrentCategory($category_id, $user_id);
+    }
+
+    public function redirectToCurrentCategory()
+    {
+        header('Location: /task/?category_id=' . $_SESSION['currentCategory']->id);
+        exit();
     }
 }
