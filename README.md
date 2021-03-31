@@ -56,20 +56,49 @@ Mit Diesen Farben und Schriftart soll ein minimalistischer Eindruck hinterlassen
 
 ### Apache Konfiguration
 Im C:\xampp\apache\conf\extra\httpd-vhosts.conf (Default Path) muss folgende Zeile hinzugefügt werden:<br>
-![e-note vhost](README_Images/vhost.png?raw=true)
-[Link zu den Zeilen](https://git.bbcag.ch/inf-bl/zh/2020/applikationsentwicklung/andreas/webentwicklung/e-note/-/blob/master/Dokumentation/vhost.txt "vhost File")<br>
-Bei dieser Konfiguration muss das Projekt Ordner im " C: /xampp/htdocs sein.
+```apache
+# [...]
+
+# Wird benötigt um VirtualHosts für alle Requests auf Port 80 zu aktivieren
+NameVirtualHost *:80
+
+# [...]
+
+# Eigentliche VHost Konfiguration
+<VirtualHost 127.0.0.1>
+    # DNS Name auf den der VHost hören soll
+    ServerName e-note
+
+    # Ort an dem Das Projekt zu finden ist
+    DocumentRoot "C:/xampp/htdocs/e-note/ENote/public"
+
+    # Nochmals
+    <Directory "C:/xampp/htdocs/e-note/ENote/public">
+        Options Indexes FollowSymLinks
+        Options +Includes
+        AllowOverride All
+        Order allow,deny
+        Require all granted
+        Allow from All
+        DirectoryIndex index.php
+    </Directory>
+</VirtualHost>
+```
+[Link zur genauere Anleitung](https://git.bbcag.ch/inf-bl/zh/2020/applikationsentwicklung/andreas/webentwicklung/e-note/-/blob/master/ENote/README.md "MVC Anleitung")<br>
 
 ### Windows Konfiguration
 Im C:\Windows\System32\drivers\etc\hosts (Default Path) muss folgende Zeile hinzugefügt werden:<br>
-127.0.0.1	e-Note
+```
+127.0.0.1    e-note
+```
+
 
 ### PHP Konfiguration
 1. PHP Web Page als Konfiguration hinzufügen
 2. Bei Server Host «e-Note» eingeben
 
 ### Datenbank Setup
-Schema.sql in MySQL Workbench ausführen.
+[schema.sql](https://git.bbcag.ch/inf-bl/zh/2020/applikationsentwicklung/andreas/webentwicklung/e-note/-/blob/master/ENote/data/schema.sql "Schema") in MySQL Workbench ausführen.
 
 # Benutzerhandbuch
 Der Benutzer wird als erstens zur Login Seite geleitet. Nachdem Registrieren und Login wird der Benutzer zur Startseite seines Accounts weitergeleitet. Auf dem Navbar ist das Logo und Home Button zusehen. Sie führen beide zur Starseite. Ausserdem noch das User-Icon, dass ein Dropdown-Menu anzeigt, wenn man mit dem Cursor darüber hovered. Im Dropdown-Menu kann man Benuzereinstellung auswählen oder sich abmelden. Auf dem Side-Navigation sind zwei default Menupunkte, nämlich «Add Category» und «All Category». Unter «Add Category» kann man eingene Kategorien erstellen. «All Category» ist die Startseite aller Benutzer, dort werden alle Kategorien der Benutzer angezeigt. Zusätzlich sieht man auch welche Tasks auf den aktuellen oder nächsten Tag fällig ist.
