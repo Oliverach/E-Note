@@ -8,7 +8,7 @@
                 <input type="text" placeholder="Task Description" name="description" required>
             </div>
 
-            <input type="date" name="date" required>
+            <input type="date" name="date" placeholder="Select date" min="<?= date("Y-m-d")?>" required>
             <input type="submit" value="Create">
         </form>
     </div>
