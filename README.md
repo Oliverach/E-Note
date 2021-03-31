@@ -84,14 +84,14 @@ NameVirtualHost *:80
     </Directory>
 </VirtualHost>
 ```
-[Link zur genauere Anleitung](https://git.bbcag.ch/inf-bl/zh/2020/applikationsentwicklung/andreas/webentwicklung/e-note/-/blob/master/ENote/README.md "MVC Anleitung")<br>
+
 
 ### Windows Konfiguration
 Im C:\Windows\System32\drivers\etc\hosts (Default Path) muss folgende Zeile hinzugefügt werden:<br>
 ```
 127.0.0.1    e-note
 ```
-
+[Link zur genauere Anleitung](https://git.bbcag.ch/inf-bl/zh/2020/applikationsentwicklung/andreas/webentwicklung/e-note/-/blob/master/ENote/README.md "MVC Anleitung")<br>
 
 ### PHP Konfiguration
 1. PHP Web Page als Konfiguration hinzufügen
